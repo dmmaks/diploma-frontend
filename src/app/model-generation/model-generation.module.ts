@@ -13,7 +13,7 @@ import {MatInputModule} from "@angular/material/input";
 import { DishAddEditComponent } from './dish-add-edit/dish-add-edit.component';
 import { IngredientEditComponent } from './ingredient-edit/ingredient-edit.component';
 import { KitchenwareEditComponent } from './kitchenware-edit/kitchenware-edit.component';
-import { DeleteConfirmationComponent } from './delete-confirmation/view-technique.component';
+import { ViewTechniqueMitigationComponent } from './view-technique-mitigation/view-technique-mitigation.component';
 import { DishInfoComponent } from './dish-info/dish-info.component';
 
 
@@ -25,7 +25,7 @@ import { DishInfoComponent } from './dish-info/dish-info.component';
     DishAddEditComponent,
     IngredientEditComponent,
     KitchenwareEditComponent,
-    DeleteConfirmationComponent,
+    ViewTechniqueMitigationComponent,
     DishInfoComponent,
   ],
   imports: [

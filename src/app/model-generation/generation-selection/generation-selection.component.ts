@@ -14,7 +14,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { SearchDishParams } from 'src/app/_models/search-dish-params';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { ViewTechniqueComponent } from '../delete-confirmation/view-technique.component';
+import { ViewTechniqueMitigationComponent } from '../view-technique-mitigation/view-technique-mitigation.component';
 import { Sort, SortDirection } from '@angular/material/sort';
 import { ModelGenerationDeviceFilter } from 'src/app/_models/_filters/model-generation-device-filter';
 import { SearchDeviceParams } from 'src/app/_models/search-device-params';
@@ -22,6 +22,7 @@ import { DeviceService } from 'src/app/_services/device.service';
 import { GeneratedModel } from 'src/app/_models/generated-model';
 import { Device } from 'src/app/_models/device';
 import { ModelGenerationService } from 'src/app/_services/model-generation.service';
+import { TechniqueMitigationService } from 'src/app/_services/technique-mitigation.service';
 
 
 @Component({
@@ -61,6 +62,7 @@ export class ModelGenerationComponent {
   constructor(
     private deviceService: DeviceService,
     private modelGenerationService: ModelGenerationService,
+    private techniqueMitigationService: TechniqueMitigationService,
     private dishService: DishService,
     private ingredientService: IngredientService,
     private alertService: AlertService,
@@ -127,7 +129,7 @@ export class ModelGenerationComponent {
   }
 
   generateModel() : void {
-    this.modelGenerationService.generatModelById(this.selectedDeviceId)
+    this.modelGenerationService.generateModelById(this.selectedDeviceId)
       .pipe(takeUntil(this.destroy))
       .subscribe({
         next: response => {
@@ -148,6 +150,52 @@ export class ModelGenerationComponent {
     return device ? device.name : '';
   }
 
+  openTechniqueDialog(id: string): void {
+    console.log(id);
+    this.techniqueMitigationService.getTechniqueById(id)
+        .pipe(takeUntil(this.destroy))
+        .subscribe({
+          next: response => {
+            const dialogRef = this.dialog.open(ViewTechniqueMitigationComponent, {
+              width: '30%',
+              data: {techniqueMitigation: response}
+            });
+          },
+          error: error => {
+            switch(error.status){
+              case 404:
+                this.alertService.error(error.error.message, false, false, "error-dialog");
+                break;
+              default:
+                this.alertService.error("несподівана помилка, спробуйте пізніше", false, false, "error-dialog");
+                break;
+            }
+            this.alertService.error(this.alertMessage);
+          }});
+  }
+
+  openMitigationDialog(id: string): void {
+    this.techniqueMitigationService.getMitigationById(id)
+        .pipe(takeUntil(this.destroy))
+        .subscribe({
+          next: response => {
+            const dialogRef = this.dialog.open(ViewTechniqueMitigationComponent, {
+              width: '250px',
+              data: {techniqueMitigation: response}
+            });
+          },
+          error: error => {
+            switch(error.status){
+              case 404:
+                this.alertService.error(error.error.message, false, false, "error-dialog");
+                break;
+              default:
+                this.alertService.error("несподівана помилка, спробуйте пізніше", false, false, "error-dialog");
+                break;
+            }
+            this.alertService.error(this.alertMessage);
+          }});
+  }
 
 
   //------------------------------------------------------

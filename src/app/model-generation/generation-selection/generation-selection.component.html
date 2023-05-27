@@ -69,12 +69,12 @@
 
     <ng-container matColumnDef="technique">
       <mat-header-cell *matHeaderCellDef>Загрози</mat-header-cell>
-      <mat-cell *matCellDef="let item">{{item.techniqueName}}</mat-cell>
+      <mat-cell *matCellDef="let item" (click)="openTechniqueDialog(item.techniqueId)">{{item.techniqueName}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="mitigation">
       <mat-header-cell *matHeaderCellDef>Пом'якшення</mat-header-cell>
-      <mat-cell class="content-text" *matCellDef="let item">{{item.mitigationName}}</mat-cell>
+      <mat-cell class="content-text" *matCellDef="let item" (click)="openMitigationDialog(item.mitigationId)">{{item.mitigationName}}</mat-cell>
     </ng-container>
 
     <!-- <ng-container matColumnDef="name">
