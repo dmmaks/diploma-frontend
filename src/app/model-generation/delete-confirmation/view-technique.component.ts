@@ -6,20 +6,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './delete-confirmation.component.html',
   styleUrls: ['./delete-confirmation.component.scss']
 })
-export class DeleteConfirmationComponent implements OnInit {
+export class ViewTechniqueComponent implements OnInit {
   
-    constructor(public dialogRef: MatDialogRef<DeleteConfirmationComponent>) {
+    constructor(public dialogRef: MatDialogRef<ViewTechniqueComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
     }
   
     ngOnInit() {
-    }
-  
-    onConfirm(): void {
-      this.dialogRef.close(true);
-    }
-  
-    onDismiss(): void {
-      this.dialogRef.close(false);
     }
   }
   

@@ -56,22 +56,15 @@ table{
 
 .withActions {
   @include mat-table-columns((
-  image: (width: 20%),
-  name: (width: 12%),
-  category: (width: 18%),
-  type: (width: 10%),
-  description: (width: 25%),
-  actions: (width: 15%),
+    technique: (width: 25%),
+    mitigation: (width: 29%)
   ));
 }
 
 .withoutActions {
   @include mat-table-columns((
-  image: (width: 25%),
-  name: (width: 14%),
-  category: (width: 18%),
-  type: (width: 14%),
-  description: (width: 29%)
+  technique: (width: 25%),
+  mitigation: (width: 29%)
   ));
 }
 
@@ -100,9 +93,35 @@ table{
   width: 100%;
 }
 
-.filters {
-  display: inline-block
+.main-filters {
+  width: 60%;
 }
+
+mat-form-field, button, mat-table {
+  display: block;
+}
+
+mat-form-field {
+  width: 30%
+}
+
+mat-table {
+  width: 50%;
+}
+
+mat-cell, .mat-header-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-container, .main-filters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
 
 
 

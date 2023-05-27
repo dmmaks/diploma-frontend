@@ -1,4 +1,4 @@
-  <form [formGroup]="searchForm" (ngSubmit)="searchDishes()" class="dish-search-form">
+  <form [formGroup]="searchForm" (ngSubmit)="generateModel()" class="dish-search-form">
     <div class="filters">
     <div class="main-filters">
     <mat-form-field class="full-width-input">
@@ -10,7 +10,7 @@
         [formControl]="deviceControl"
         required
       />
-      <mat-autocomplete #auto="matAutocomplete">
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onDeviceSelected($event)" [displayWith]="displayDevice">
         <mat-option
           *ngFor="let device of filteredDevices | async"
           [value]="device">
@@ -64,36 +64,30 @@
   </form>
 
 
-<!-- <div class="table-container" *ngIf="pageContent" [ngClass] = "this.isWithActions">
-  <mat-table id="table" [dataSource]="pageContent.content" #table 
-  matSort matSortDisableClear [matSortDirection] = "sortOrder" [matSortDisabled]='isFilteredByStock || isFilteredByFavorite' (matSortChange)="sortData($event.direction)" class="mat-cell">  
+<div class="table-container" *ngIf="generatedModel">
+  <mat-table id="table" [dataSource]="generatedModel.content" #table class="mat-cell">  
 
-    <ng-container matColumnDef="image">
-      <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let item"><img [src]="item.imgUrl" routerLink="{{item.id}}" class="dish-img"/></mat-cell>
+    <ng-container matColumnDef="technique">
+      <mat-header-cell *matHeaderCellDef>Загрози</mat-header-cell>
+      <mat-cell *matCellDef="let item">{{item.techniqueName}}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="category">
-      <mat-header-cell *matHeaderCellDef>Category</mat-header-cell>
-      <mat-cell *matCellDef="let item">{{item.dishCategory}}</mat-cell>
+    <ng-container matColumnDef="mitigation">
+      <mat-header-cell *matHeaderCellDef>Пом'якшення</mat-header-cell>
+      <mat-cell class="content-text" *matCellDef="let item">{{item.mitigationName}}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="name">
+    <!-- <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">Name</mat-header-cell>
       <mat-cell class="content-text dish-img" *matCellDef="let item" routerLink="{{item.id}}">{{item.dishName}}</mat-cell>
-    </ng-container>
+    </ng-container> -->
 
-    <ng-container matColumnDef="type">
-      <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
-      <mat-cell class="content-text" *matCellDef="let item">{{item.dishType}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="description">
+    <!-- <ng-container matColumnDef="description">
       <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
       <mat-cell class="content-text" *matCellDef="let item">{{ (item.description.length>40)? (item.description | slice:0:40)+'...':(item.description) }}</mat-cell>
-    </ng-container>
+    </ng-container> -->
 
-    <ng-container matColumnDef="actions"  *ngIf = "userRole !== 'ROLE_ADMIN'">
+    <!-- <ng-container matColumnDef="actions"  *ngIf = "userRole !== 'ROLE_ADMIN'">
       <mat-header-cell *matHeaderCellDef>
           <button mat-icon-button color="primary" *ngIf = "userRole === 'ROLE_MODERATOR'" routerLink="./add">
           <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
@@ -116,12 +110,12 @@
           <mat-icon *ngIf="!item.isFavorite" aria-label="check_box">star_border</mat-icon>
         </button>
       </mat-cell>
-    </ng-container>
+    </ng-container> -->
 
     <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
     <mat-row *matRowDef="let item; columns: columnsToDisplay"></mat-row>
   </mat-table>
-</div> -->
+</div>
 
 <!-- <mat-paginator *ngIf="pageContent"
   [length]="pageContent.totalElements"

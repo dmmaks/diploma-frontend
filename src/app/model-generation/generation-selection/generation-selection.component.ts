@@ -14,11 +14,14 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { SearchDishParams } from 'src/app/_models/search-dish-params';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
+import { ViewTechniqueComponent } from '../delete-confirmation/view-technique.component';
 import { Sort, SortDirection } from '@angular/material/sort';
 import { ModelGenerationDeviceFilter } from 'src/app/_models/_filters/model-generation-device-filter';
 import { SearchDeviceParams } from 'src/app/_models/search-device-params';
 import { DeviceService } from 'src/app/_services/device.service';
+import { GeneratedModel } from 'src/app/_models/generated-model';
+import { Device } from 'src/app/_models/device';
+import { ModelGenerationService } from 'src/app/_services/model-generation.service';
 
 
 @Component({
@@ -28,12 +31,11 @@ import { DeviceService } from 'src/app/_services/device.service';
 })
 export class ModelGenerationComponent {
   length: number;
-
   deviceControl = new FormControl();
-
   devices: ModelGenerationDeviceFilter[] = [];
-
   filteredDevices: Observable<ModelGenerationDeviceFilter[]>;
+  generatedModel: GeneratedModel;
+  selectedDeviceId: string;
 
   pageContent: Page<Dish>;
   categories: string[] = [];
@@ -43,7 +45,7 @@ export class ModelGenerationComponent {
   filteredIngredients: Observable<DishIngredientFilter[]>;
   searchForm: FormGroup;
   destroy: ReplaySubject<any> = new ReplaySubject<any>();
-  columnsToDisplay = ['image', 'name', 'category', 'type', 'description'];
+  columnsToDisplay = ['technique', 'mitigation'];
   pageSize: number = 12;
   currentPage: number;
   alertMessage: string;
@@ -58,6 +60,7 @@ export class ModelGenerationComponent {
 
   constructor(
     private deviceService: DeviceService,
+    private modelGenerationService: ModelGenerationService,
     private dishService: DishService,
     private ingredientService: IngredientService,
     private alertService: AlertService,
@@ -84,7 +87,7 @@ export class ModelGenerationComponent {
     );
     this.userRole = this.authService.accountValue?.role;
     if (this.userRole !== 'ROLE_ADMIN') {
-      this.columnsToDisplay.push('actions');
+      // this.columnsToDisplay.push('actions');
       this.isWithActions = 'without-actions';
     }
     else {
@@ -120,15 +123,30 @@ export class ModelGenerationComponent {
 
   filterDevices(value: string): ModelGenerationDeviceFilter[] {
     this.getDevices(String(value));
-
     return this.devices;
   }
 
+  generateModel() : void {
+    this.modelGenerationService.generatModelById(this.selectedDeviceId)
+      .pipe(takeUntil(this.destroy))
+      .subscribe({
+        next: response => {
+          this.generatedModel = response;
+          this.alertService.success('Чек-лист було згенеровано', true, true);
+        },
+        error: error => {
+          this.displayError(error);
+        }
+      });
+  }
 
+  onDeviceSelected(event: MatAutocompleteSelectedEvent): void {
+    this.selectedDeviceId = event.option.value.id;
+  }
 
-
-
-
+  displayDevice(device: Device): string {
+    return device ? device.name : '';
+  }
 
 
 
@@ -281,24 +299,24 @@ export class ModelGenerationComponent {
     this.ingredientControl.setValue(null);
   }
 
-  confirmDelete(id: string): void {
-    const dialogRef = this.dialog.open(DeleteConfirmationComponent);
-    dialogRef.afterClosed().subscribe(dialogResult => {
-      if (dialogResult) {
-        this.dishService.deleteDish(id)
-      .pipe(takeUntil(this.destroy))
-      .subscribe({
-        next: () => {
-          this.alertService.success("Dish deleted",true,true);
-          this.getDishPage(this.currentPage, this.pageSize);
-        },
-        error: error => {
-          this.displayError(error);
-        }
-      });
-      }
-    });
-  }
+  // confirmDelete(id: string): void {
+  //   const dialogRef = this.dialog.open(DeleteConfirmationComponent);
+  //   dialogRef.afterClosed().subscribe(dialogResult => {
+  //     if (dialogResult) {
+  //       this.dishService.deleteDish(id)
+  //     .pipe(takeUntil(this.destroy))
+  //     .subscribe({
+  //       next: () => {
+  //         this.alertService.success("Dish deleted",true,true);
+  //         this.getDishPage(this.currentPage, this.pageSize);
+  //       },
+  //       error: error => {
+  //         this.displayError(error);
+  //       }
+  //     });
+  //     }
+  //   });
+  // }
 
   manageFilterByStock(event: MatCheckboxChange) : void {
     this.isFilteredByStock = event.source.checked;
