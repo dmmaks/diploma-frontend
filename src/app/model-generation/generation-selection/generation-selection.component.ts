@@ -157,7 +157,6 @@ export class ModelGenerationComponent {
         .subscribe({
           next: response => {
             const dialogRef = this.dialog.open(ViewTechniqueMitigationComponent, {
-              width: '30%',
               data: {techniqueMitigation: response}
             });
           },
@@ -180,7 +179,6 @@ export class ModelGenerationComponent {
         .subscribe({
           next: response => {
             const dialogRef = this.dialog.open(ViewTechniqueMitigationComponent, {
-              width: '250px',
               data: {techniqueMitigation: response}
             });
           },
