@@ -1,0 +1,16 @@
+@import url('../layout/layout.component.scss');
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-width: 400px;
+  }
+
+  .full-width-input{
+      width: 100%;
+  }
+
+  mat-form-field{
+      font-size: 20px;
+      display: block;
+  }

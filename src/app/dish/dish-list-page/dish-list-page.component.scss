@@ -1,0 +1,110 @@
+.mat-header-cell, .mat-header-row, .mat-header-cell-def {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.mat-cell{
+  font-size: 20px;
+  padding: 7px;
+}
+
+.table-container{
+  position: relative;
+  min-height: 200px;
+  max-height: 60%;
+  overflow: auto;
+}
+
+.mat-form-field, .mat-checkbox{
+  margin-left: 15px;
+}
+
+img{
+  width: 100%;
+  height: 100%;
+  max-width: 100px;
+  max-height: 150px;
+}
+
+button.btn-filter{
+  margin-left: 15px;
+  color: #FFFFFF;
+}
+
+table{
+  width: 100%;
+  
+  overflow: auto;
+}
+
+@mixin mat-table-columns($columns)
+{
+  .mat-column-
+  {
+    @each $colName, $props in $columns {
+
+      $width: map-get($props, 'width');
+
+      &#{$colName}
+      {
+        flex: 0 0 $width;
+        min-width: $width;
+      }
+    }
+  }
+}
+
+.withActions {
+  @include mat-table-columns((
+  image: (width: 20%),
+  name: (width: 12%),
+  category: (width: 18%),
+  type: (width: 10%),
+  description: (width: 25%),
+  actions: (width: 15%),
+  ));
+}
+
+.withoutActions {
+  @include mat-table-columns((
+  image: (width: 25%),
+  name: (width: 14%),
+  category: (width: 18%),
+  type: (width: 14%),
+  description: (width: 29%)
+  ));
+}
+
+
+.mat-form-field, .mat-checkbox {
+  font-size: 20px;
+  margin-top: 5px;
+
+  margin-bottom: -1%;
+}
+
+
+.dish-name:hover, .dish-img:hover {
+  cursor: pointer;
+}
+
+.likes {
+  color: #fe3e81;
+}
+
+.ingredient-filter {
+  width: 100%;
+}
+
+.chip-list {
+  width: 100%;
+}
+
+.filters {
+  display: inline-block
+}
+
+
+
+
+
