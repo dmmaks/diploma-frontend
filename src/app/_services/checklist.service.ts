@@ -27,4 +27,10 @@ export class ChecklistService {
     return this.http.put(`${baseUrl}/checklistEntries/changeIsChecked/${checklistEntryId}?isChecked=${isChecked}`, {});
   }
 
+  getChecklists(searchRequest: string): Observable<Checklist[]> {
+    return this.http.get<Checklist[]>(`${baseUrl}?`, {
+        params: new HttpParams()
+          .set('searchRequest', searchRequest)});
+  }
+
 }

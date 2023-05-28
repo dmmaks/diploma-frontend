@@ -23,20 +23,17 @@ import { GeneratedModel } from 'src/app/_models/generated-model';
 import { Device } from 'src/app/_models/device';
 import { ModelGenerationService } from 'src/app/_services/model-generation.service';
 import { TechniqueMitigationService } from 'src/app/_services/technique-mitigation.service';
+import { Checklist } from 'src/app/_models/checklist';
+import { ChecklistService } from 'src/app/_services/checklist.service';
 
 
 @Component({
-  selector: 'generation-selection',
-  templateUrl: './generation-selection.component.html',
-  styleUrls: ['./generation-selection.component.scss']
+  selector: 'checklist-list-page.component',
+  templateUrl: './checklist-list-page.component.html',
+  styleUrls: ['./checklist-list-page.component.scss']
 })
-export class ModelGenerationComponent {
-  length: number;
-  deviceControl = new FormControl();
-  devices: ModelGenerationDeviceFilter[] = [];
-  filteredDevices: Observable<ModelGenerationDeviceFilter[]>;
-  generatedModel: GeneratedModel;
-  selectedDeviceId: string;
+export class ChecklistListPageComponent {
+  checklists: Checklist[] = [];
 
   pageContent: Page<Dish>;
   categories: string[] = [];
@@ -46,7 +43,7 @@ export class ModelGenerationComponent {
   filteredIngredients: Observable<DishIngredientFilter[]>;
   searchForm: FormGroup;
   destroy: ReplaySubject<any> = new ReplaySubject<any>();
-  columnsToDisplay = ['technique', 'mitigation'];
+  columnsToDisplay = ['checklist', 'device'];
   pageSize: number = 12;
   currentPage: number;
   alertMessage: string;
@@ -60,6 +57,7 @@ export class ModelGenerationComponent {
   @ViewChild('ingredientInput') ingredientInput: ElementRef<HTMLInputElement>;
 
   constructor(
+    private checklistService: ChecklistService,
     private deviceService: DeviceService,
     private modelGenerationService: ModelGenerationService,
     private techniqueMitigationService: TechniqueMitigationService,
@@ -74,48 +72,23 @@ export class ModelGenerationComponent {
   
 
   ngOnInit(): void {
-    this.getIngredients("");
-    this.getDevices("");
-    this.getCategories();
     this.searchForm = this.createFormGroup();
-    this.getBySearch();
-    this.filteredDevices = this.deviceControl.valueChanges.pipe(
-      startWith(null),
-      map((device: string) => (device ? this.filterDevices(device) : this.devices.slice())),
-    );
-    this.filteredIngredients = this.ingredientControl.valueChanges.pipe(
-      startWith(null),
-      map((ingredient: string) => (ingredient ? this.filterIngredients(ingredient) : this.ingredients.slice())),
-    );
-    this.userRole = this.authService.accountValue?.role;
-    if (this.userRole !== 'ROLE_ADMIN') {
-      // this.columnsToDisplay.push('actions');
-      this.isWithActions = 'without-actions';
-    }
-    else {
-      this.isWithActions = 'with-actions';
-    }
+    this.getChecklistsBySearch("");
   }
 
   createFormGroup(): FormGroup {
     return this.formBuilder.group({
-      name: [''],
-      categories: ['']
+      name: ['']
     });
   }
 
-  getDevices(searchText: string) {
-    this.devices = [];
-    const searchParams: SearchDeviceParams = {name: searchText, order: 'asc'};
-    this.deviceService.getDevicesBySearch(searchParams, 10)
+  getChecklistsBySearch(searchText: string) : void {
+    this.checklists = [];
+    this.checklistService.getChecklists(searchText)
       .pipe(takeUntil(this.destroy))
       .subscribe(
         {next: response => {
-          for (let device of response.content) {
-            if(device.id !== undefined) {
-              this.devices.push({ name: device.name, id: device.id});
-            }
-          }
+          this.checklists = response
           },
           error: error => {
             this.displayError(error);
@@ -123,34 +96,38 @@ export class ModelGenerationComponent {
       )
   }
 
-  filterDevices(value: string): ModelGenerationDeviceFilter[] {
-    this.getDevices(String(value));
-    return this.devices;
+  performSearch() : void {
+    this.getChecklistsBySearch(this.searchForm.value.name);
   }
 
-  generateModel() : void {
-    if (this.deviceControl.valid) {
-      this.modelGenerationService.generateModelById(this.selectedDeviceId)
-        .pipe(takeUntil(this.destroy))
-        .subscribe({
-          next: response => {
-            this.generatedModel = response;
-            this.alertService.success('Чек-лист було згенеровано', true, true);
-          },
-          error: error => {
-            this.displayError(error);
-          }
-        });
-      }
-  }
+  // filterDevices(value: string): ModelGenerationDeviceFilter[] {
+  //   this.getDevices(String(value));
+  //   return this.devices;
+  // }
 
-  onDeviceSelected(event: MatAutocompleteSelectedEvent): void {
-    this.selectedDeviceId = event.option.value.id;
-  }
+  // generateModel() : void {
+  //   if (this.deviceControl.valid) {
+  //     this.modelGenerationService.generateModelById(this.selectedDeviceId)
+  //       .pipe(takeUntil(this.destroy))
+  //       .subscribe({
+  //         next: response => {
+  //           this.generatedModel = response;
+  //           this.alertService.success('Чек-лист було згенеровано', true, true);
+  //         },
+  //         error: error => {
+  //           this.displayError(error);
+  //         }
+  //       });
+  //     }
+  // }
 
-  displayDevice(device: Device): string {
-    return device ? device.name : '';
-  }
+  // onDeviceSelected(event: MatAutocompleteSelectedEvent): void {
+  //   this.selectedDeviceId = event.option.value.id;
+  // }
+
+  // displayDevice(device: Device): string {
+  //   return device ? device.name : '';
+  // }
 
   openTechniqueDialog(id: string): void {
     console.log(id);

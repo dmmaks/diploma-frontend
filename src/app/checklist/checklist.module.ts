@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ChecklistRoutingModule} from "./checklist-routing.module";
-import { ModelGenerationComponent } from './generation-selection/generation-selection.component';
+import { ChecklistListPageComponent } from './checklist-list-page/checklist-list-page.component';
 import {LayoutComponent} from "./layout/layout.component";
 import {SharedModule} from "../shared/shared.module";
 import {MatDialogModule} from "@angular/material/dialog";
@@ -21,7 +21,7 @@ import { ChecklistInfoComponent } from './checklist-info/checklist-info.componen
 @NgModule({
   declarations: [
     LayoutComponent,
-    ModelGenerationComponent,
+    ChecklistListPageComponent,
     DishAddEditComponent,
     IngredientEditComponent,
     KitchenwareEditComponent,
