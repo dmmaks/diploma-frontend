@@ -102,11 +102,11 @@ mat-form-field, button, mat-table {
 }
 
 mat-form-field {
-  width: 30%
+  width: 50%
 }
 
 mat-table {
-  width: 50%;
+  width: 95%;
 }
 
 mat-cell, .mat-header-cell {
@@ -115,11 +115,20 @@ mat-cell, .mat-header-cell {
   align-items: center;
 }
 
-.table-container, .main-filters {
+.table-container, .main-filters, mat-card {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+}
+
+mat-card-content {
+  margin: 0;
+  width: 100%;
+}
+
+mat-card {
+  margin: 1em auto;
 }
 
 

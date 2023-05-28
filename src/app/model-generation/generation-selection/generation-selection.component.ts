@@ -129,17 +129,19 @@ export class ModelGenerationComponent {
   }
 
   generateModel() : void {
-    this.modelGenerationService.generateModelById(this.selectedDeviceId)
-      .pipe(takeUntil(this.destroy))
-      .subscribe({
-        next: response => {
-          this.generatedModel = response;
-          this.alertService.success('Чек-лист було згенеровано', true, true);
-        },
-        error: error => {
-          this.displayError(error);
-        }
-      });
+    if (this.deviceControl.valid) {
+      this.modelGenerationService.generateModelById(this.selectedDeviceId)
+        .pipe(takeUntil(this.destroy))
+        .subscribe({
+          next: response => {
+            this.generatedModel = response;
+            this.alertService.success('Чек-лист було згенеровано', true, true);
+          },
+          error: error => {
+            this.displayError(error);
+          }
+        });
+      }
   }
 
   onDeviceSelected(event: MatAutocompleteSelectedEvent): void {
