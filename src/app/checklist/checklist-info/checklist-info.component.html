@@ -1,0 +1,43 @@
+<mat-card fxFlex="50%" fxFlex.xs="95%">
+  <mat-card-content> 
+    
+<div *ngIf="checklist" class="checklist-name">
+  <b>{{checklist.name}}</b>
+</div>
+
+<div *ngIf="checklist" class="checklist-device">
+  Для пристрою: {{checklist.deviceName}}
+</div>
+
+<div class="table-container" *ngIf="checklist">
+  <mat-table id="table" [dataSource]="checklist.entries" #table class="mat-cell">  
+
+    <ng-container matColumnDef="technique">
+      <mat-header-cell *matHeaderCellDef>Загрози</mat-header-cell>
+      <mat-cell *matCellDef="let item" (click)="openTechniqueDialog(item.techniqueId)">{{item.techniqueName}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="mitigation">
+      <mat-header-cell *matHeaderCellDef>Пом'якшення</mat-header-cell>
+      <mat-cell class="content-text" *matCellDef="let item" (click)="openMitigationDialog(item.mitigationId)">{{item.mitigationName}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="tick">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let row; let i=index;">
+        <button mat-icon-button color="accent" (click)="changeStatus(i, row.id, row.checked)">
+          <mat-icon *ngIf="row.checked == true" aria-label="Прибрати відмітку">check_box</mat-icon>
+          <mat-icon *ngIf="row.checked == false" aria-label="Відмітити">check_box_outline_blank</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+    <mat-row *matRowDef="let item; columns: columnsToDisplay"></mat-row>
+  </mat-table>
+</div>
+<div *ngIf="isNotFound" class="not-found">
+  <b>Чек-лист не знайдено</b>
+</div>
+</mat-card-content> 
+</mat-card>

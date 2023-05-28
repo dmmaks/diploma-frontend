@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ModelGenerationRoutingModule} from "./model-generation-routing.module";
+import {ChecklistRoutingModule} from "./checklist-routing.module";
 import { ModelGenerationComponent } from './generation-selection/generation-selection.component';
 import {LayoutComponent} from "./layout/layout.component";
 import {SharedModule} from "../shared/shared.module";
@@ -14,7 +14,7 @@ import { DishAddEditComponent } from './dish-add-edit/dish-add-edit.component';
 import { IngredientEditComponent } from './ingredient-edit/ingredient-edit.component';
 import { KitchenwareEditComponent } from './kitchenware-edit/kitchenware-edit.component';
 import { ViewTechniqueMitigationComponent } from './view-technique-mitigation/view-technique-mitigation.component';
-import { DishInfoComponent } from './dish-info/dish-info.component';
+import { ChecklistInfoComponent } from './checklist-info/checklist-info.component';
 
 
 
@@ -26,7 +26,7 @@ import { DishInfoComponent } from './dish-info/dish-info.component';
     IngredientEditComponent,
     KitchenwareEditComponent,
     ViewTechniqueMitigationComponent,
-    DishInfoComponent,
+    ChecklistInfoComponent,
   ],
   imports: [
     MatFormFieldModule,
@@ -34,8 +34,8 @@ import { DishInfoComponent } from './dish-info/dish-info.component';
     FormsModule,
     MatCheckboxModule,
     SharedModule,
-    ModelGenerationRoutingModule,
+    ChecklistRoutingModule,
     MatDialogModule
   ],
 })
-export class ModelGenerationModule { }
+export class ChecklistModule { }

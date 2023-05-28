@@ -13,6 +13,7 @@ const stockModule = () => import('./stock/stock.module').then(x => x.StockModule
 const friendsModule = () => import('./friends/friends.module').then(x => x.FriendsModule);
 const dishModule = () => import('./dish/dish.module').then(x => x.DishModule);
 const modelGenerationModule = () => import('./model-generation/model-generation.module').then(x => x.ModelGenerationModule);
+const checklistModule = () => import('./checklist/checklist.module').then(x => x.ChecklistModule);
 
 const routes: Routes = [
   { path: '', redirectTo: '/account/signin', pathMatch: 'full' },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'stock', loadChildren: stockModule, canActivate: [AuthGuard], data: { roles: [Role.User] } },
   { path: 'dishes', loadChildren: dishModule, canActivate: [AuthGuard], data: { roles: [Role.Admin, Role.User, Role.Moderator] } },
   { path: 'model-generation', loadChildren: modelGenerationModule, canActivate: [AuthGuard], data: { roles: [Role.Admin, Role.User, Role.Moderator] } },
+  { path: 'checklists', loadChildren: checklistModule, canActivate: [AuthGuard], data: { roles: [Role.Admin, Role.User, Role.Moderator] } },
   { path: '**', redirectTo: '/account/signin', pathMatch: 'full' }
 ];
 

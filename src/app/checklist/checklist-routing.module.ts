@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {LayoutComponent} from "./layout/layout.component";
 import {ModelGenerationComponent} from "./generation-selection/generation-selection.component";
 import { DishAddEditComponent } from './dish-add-edit/dish-add-edit.component';
-import { DishInfoComponent } from './dish-info/dish-info.component';
+import { ChecklistInfoComponent } from './checklist-info/checklist-info.component';
 
 
 const routes: Routes = [{
@@ -11,7 +11,7 @@ const routes: Routes = [{
   children:[
      {path:'', component: ModelGenerationComponent},
      {path: 'add', component: DishAddEditComponent},
-     {path:':id', component: DishInfoComponent},
+     {path:':id', component: ChecklistInfoComponent},
     { path: 'edit/:id', component: DishAddEditComponent }
   ]
 }];
@@ -20,4 +20,4 @@ const routes: Routes = [{
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ModelGenerationRoutingModule { }
+export class ChecklistRoutingModule { }

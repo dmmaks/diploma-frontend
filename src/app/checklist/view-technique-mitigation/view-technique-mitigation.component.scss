@@ -1,0 +1,31 @@
+.cancel-button {
+    background-color: #e1e1e1;
+}
+
+.mat-dialog-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mat-dialog-content{
+    font-size: 17px;
+}
+
+.close-button{
+    float: right;
+    top:-15px;
+    right:-15px;
+  }
+  
+  .close-icon {
+    transition: 1s ease-in-out;
+  }
+  
+  .close-icon:hover {
+    transform: rotate(180deg);
+  }
+
+  h1 {
+    text-align: center;
+  }
