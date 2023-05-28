@@ -40,4 +40,15 @@ export class DeviceService {
     return this.getDeviceList(currentPage, this.searchParams, pageSize);
   }
 
+  deleteDevice(id: string) : Observable<Object> {
+    return this.http.delete(`${baseUrl}/${id}`);
+  }
+
+  editDevice(device: Device): Observable<Object>{
+    return this.http.put(`${baseUrl}/${device.id}`, device);
+  }
+
+  createDevice(device: Device): Observable<Object> {
+    return this.http.post(`${baseUrl}`, device);
+  }
 }

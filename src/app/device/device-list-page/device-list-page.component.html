@@ -1,0 +1,77 @@
+
+    <form [formGroup]="searchForm" (ngSubmit)="getDevicesBySearch()" class="device-search-form">
+    <div class="filters">
+    <div class="main-filters">
+    <mat-form-field class="full-width-input">
+      <input matInput placeholder="Шукати за назвою" formControlName="name">
+    </mat-form-field>
+    <button type="submit" class="btn-filter" mat-flat-button color="accent">Фільтрувати</button>
+    </div>
+</div>
+      
+  </form>
+
+  
+<div class="table-container" *ngIf="pageContent">
+  <mat-table id="table" [dataSource]="pageContent.content" #table class="mat-cell" matSort matSortDisableClear [matSortDirection] = "sortOrder" (matSortChange)="sortData($event.direction)">  
+
+    <ng-container matColumnDef="name" sortActionDescription="Сортувати за назвою">
+      <mat-header-cell *matHeaderCellDef mat-sort-header >Назва</mat-header-cell>
+      <mat-cell class="content-text" *matCellDef="let item">{{item.name}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="os">
+      <mat-header-cell *matHeaderCellDef>Операційна система</mat-header-cell>
+      <mat-cell class="content-text" *matCellDef="let item">{{item.os}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="os_min_version">
+      <mat-header-cell *matHeaderCellDef>Мінімальна версія ОС</mat-header-cell>
+      <mat-cell class="content-text" *matCellDef="let item">{{item.osMinVersion}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="os_max_version">
+      <mat-header-cell *matHeaderCellDef>Максимальна версія ОС</mat-header-cell>
+      <mat-cell class="content-text" *matCellDef="let item">{{item.osMaxVersion}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="chipset">
+      <mat-header-cell *matHeaderCellDef>Процесор</mat-header-cell>
+      <mat-cell class="content-text" *matCellDef="let item">{{item.chipset}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fingerprint_scanner">
+      <mat-header-cell *matHeaderCellDef>Сканер відбитків</mat-header-cell>
+      <mat-cell class="content-text" *matCellDef="let item">{{item.fingerprintScanner}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="face_recognition">
+      <mat-header-cell *matHeaderCellDef>Розпізнавання обличчя</mat-header-cell>
+      <mat-cell class="content-text" *matCellDef="let item">{{item.faceRecognition}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let item" >
+          <button mat-icon-button color="accent" (click)="editDevice(item)">
+          <mat-icon aria-label="Редагувати">edit</mat-icon>
+        </button>
+          <button mat-icon-button color="accent">
+            <mat-icon aria-label="Видалити" (click)="confirmDeletion(item.id)">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+    <mat-row *matRowDef="let item; columns: columnsToDisplay"></mat-row>
+  </mat-table>
+</div>
+
+<mat-paginator *ngIf="pageContent"
+  [length]="pageContent.totalElements"
+  [pageIndex]="currentPage"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[12, 20, 40]"
+  (page)="paginationHandler($event)">
+</mat-paginator>

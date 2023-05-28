@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ChecklistRoutingModule} from "./checklist-routing.module";
-import { ChecklistListPageComponent } from './checklist-list-page/checklist-list-page.component';
+import {ChecklistRoutingModule} from "./device-routing.module";
+import { ChecklistListPageComponent } from './device-list-page/device-list-page.component';
 import {LayoutComponent} from "./layout/layout.component";
 import {SharedModule} from "../shared/shared.module";
 import {MatDialogModule} from "@angular/material/dialog";
@@ -11,9 +11,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
-import { ChecklistEditComponent } from './checklist-edit/checklist-edit.component';
-import { ViewTechniqueMitigationComponent } from './view-technique-mitigation/view-technique-mitigation.component';
-import { ChecklistInfoComponent } from './checklist-info/checklist-info.component';
+import { ChecklistEditComponent } from './device-edit/checklist-edit.component';
 import { MatButtonModule } from '@angular/material/button';
 import { DeletionConfirmationComponent } from './deletion-confirmation/deletion-confirmation.component';
 
@@ -24,8 +22,6 @@ import { DeletionConfirmationComponent } from './deletion-confirmation/deletion-
     LayoutComponent,
     ChecklistListPageComponent,
     ChecklistEditComponent,
-    ViewTechniqueMitigationComponent,
-    ChecklistInfoComponent,
     DeletionConfirmationComponent
   ],
   imports: [
@@ -40,4 +36,4 @@ import { DeletionConfirmationComponent } from './deletion-confirmation/deletion-
     MatButtonModule
   ],
 })
-export class ChecklistModule { }
+export class DeviceModule { }
