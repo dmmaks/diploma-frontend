@@ -11,7 +11,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
-import { DishAddEditComponent } from './dish-add-edit/dish-add-edit.component';
+import { ChecklistEditComponent } from './checklist-edit/checklist-edit.component';
 import { IngredientEditComponent } from './ingredient-edit/ingredient-edit.component';
 import { KitchenwareEditComponent } from './kitchenware-edit/kitchenware-edit.component';
 import { ViewTechniqueMitigationComponent } from './view-technique-mitigation/view-technique-mitigation.component';
@@ -25,7 +25,7 @@ import { DeletionConfirmationComponent } from './deletion-confirmation/deletion-
   declarations: [
     LayoutComponent,
     ChecklistListPageComponent,
-    DishAddEditComponent,
+    ChecklistEditComponent,
     IngredientEditComponent,
     KitchenwareEditComponent,
     ViewTechniqueMitigationComponent,

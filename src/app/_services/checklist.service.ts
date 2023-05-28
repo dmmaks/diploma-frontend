@@ -38,8 +38,6 @@ export class ChecklistService {
   }
 
   editChecklist(checklistName: string, checklistId: string): Observable<Object>{
-    return this.http.put(`${baseUrl}/${checklistId}`, {
-        params: new HttpParams()
-          .set('searchRequest', checklistName)});
+    return this.http.put(`${baseUrl}/${checklistId}?checklistName=${checklistName}`, {});
   }
 }

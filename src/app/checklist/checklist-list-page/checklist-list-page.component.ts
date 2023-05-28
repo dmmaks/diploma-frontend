@@ -5,7 +5,7 @@ import {Observable, ReplaySubject} from "rxjs";
 import {AlertService, AuthService, DishService, IngredientService} from "../../_services";
 import {Page} from "../../_models/page";
 import {map, startWith, takeUntil} from "rxjs/operators";
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import { Dish } from 'src/app/_models/dish';
 import { IngredientFilter } from 'src/app/_models/_filters/ingredient.filter';
 import { DishIngredientFilter } from 'src/app/_models/_filters/dish-ingredient-filter';
@@ -26,6 +26,7 @@ import { TechniqueMitigationService } from 'src/app/_services/technique-mitigati
 import { Checklist } from 'src/app/_models/checklist';
 import { ChecklistService } from 'src/app/_services/checklist.service';
 import { DeletionConfirmationComponent } from '../deletion-confirmation/deletion-confirmation.component';
+import { ChecklistEditComponent } from '../checklist-edit/checklist-edit.component';
 
 
 @Component({
@@ -163,6 +164,22 @@ export class ChecklistListPageComponent {
       });
       }
     });
+  }
+
+  editChecklist(checklist: Checklist){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    let dataDialog = Object.assign({}, checklist);
+    dialogConfig.data = {
+      checklist: dataDialog
+    };
+    const dialogRef = this.dialog.open(ChecklistEditComponent, dialogConfig);
+    dialogRef.afterClosed().pipe(takeUntil(this.destroy)).subscribe((data: Checklist) => {
+      if(data){
+        checklist.name = data.name;
+      }
+    })
   }
 
 
