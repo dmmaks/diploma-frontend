@@ -27,7 +27,6 @@ export class ChecklistInfoComponent implements OnInit {
   constructor(
     private checklistService: ChecklistService, 
     private techniqueMitigationService: TechniqueMitigationService, 
-    private deviceService: DeviceService, 
     private route: ActivatedRoute, 
     private alertService: AlertService, 
     private dialog: MatDialog,
@@ -102,37 +101,37 @@ export class ChecklistInfoComponent implements OnInit {
           }});
   }
 
-  changeStatus(index: number, id: string, active: boolean): void {
+  changeIsChecked(index: number, id: string, checked: boolean): void {
     this.alertService.clear();
-    // this.service.changeStatus(id)
-    //   .pipe(takeUntil(this.destroy))
-    //   .subscribe({
-    //       next: () => {
-    //         this.pageContent[index].active = !active;
-    //       },
-    //       error: error => {
-    //         if (error.status == 404) {
-    //           this.alertService.error(error.error.message, false, true);
+    this.checklistService.changeIsChecked(id, !checked)
+      .pipe(takeUntil(this.destroy))
+      .subscribe({
+          next: () => {
+            this.checklist.entries[index].checked = !checked;
+          },
+          error: error => {
+            if (error.status == 404) {
+              this.alertService.error(error.error.message, false, true);
 
-    //         } else {
-    //           this.alertService.error("There was an error on the server, please try again later.", false, true);
+            } else {
+              this.alertService.error("Сталася помилка, будь ласка повторіть пізніше.", false, true);
 
-    //         }
-    //       }
-    //     }
-    //   )
+            }
+          }
+        }
+      )
   }
   
   displayError(error: any) : void {
     switch (error.status) {
       case 400:
-        this.alertService.error("Something went wrong",true,true);
+        this.alertService.error("Щось пішло не так",true,true);
         break;
       case 404:
         this.isNotFound = true;
         break;
       default:
-        this.alertService.error("There was an error on the server, please try again later.",true,true);
+        this.alertService.error("Сталася помилка на сервері, будь ласка повторіть пізніше.",true,true);
         break;
     }
     

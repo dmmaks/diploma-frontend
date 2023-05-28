@@ -23,4 +23,8 @@ export class ChecklistService {
     return this.http.get<Checklist>(`${baseUrl}/${checklistId}`);
   }
 
+  changeIsChecked(checklistEntryId: string, isChecked: boolean) {
+    return this.http.put(`${baseUrl}/checklistEntries/changeIsChecked/${checklistEntryId}?isChecked=${isChecked}`, {});
+  }
+
 }

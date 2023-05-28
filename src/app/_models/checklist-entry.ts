@@ -7,6 +7,6 @@ export interface ChecklistEntry {
     mitigationId: string;
     mitigationName: string;
     mitigationDescription: string;
-    isChecked: boolean;
+    checked: boolean;
   }
   

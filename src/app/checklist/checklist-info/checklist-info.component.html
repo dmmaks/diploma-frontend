@@ -25,7 +25,7 @@
     <ng-container matColumnDef="tick">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let row; let i=index;">
-        <button mat-icon-button color="accent" (click)="changeStatus(i, row.id, row.checked)">
+        <button mat-icon-button color="accent" (click)="changeIsChecked(i, row.id, row.checked)">
           <mat-icon *ngIf="row.checked == true" aria-label="Прибрати відмітку">check_box</mat-icon>
           <mat-icon *ngIf="row.checked == false" aria-label="Відмітити">check_box_outline_blank</mat-icon>
         </button>
