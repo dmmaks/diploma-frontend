@@ -54,10 +54,11 @@ table{
   }
 }
 
-.withActions {
+.table-container {
   @include mat-table-columns((
-    technique: (width: 25%),
-    mitigation: (width: 29%)
+    checklist: (width: 45%),
+    device: (width: 45%),
+    actions: (width: 10%)
   ));
 }
 

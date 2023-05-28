@@ -33,4 +33,13 @@ export class ChecklistService {
           .set('searchRequest', searchRequest)});
   }
 
+  deleteChecklist(id: string) : Observable<Object> {
+    return this.http.delete(`${baseUrl}/${id}`);
+  }
+
+  editChecklist(checklistName: string, checklistId: string): Observable<Object>{
+    return this.http.put(`${baseUrl}/${checklistId}`, {
+        params: new HttpParams()
+          .set('searchRequest', checklistName)});
+  }
 }

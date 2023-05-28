@@ -25,6 +25,7 @@ import { ModelGenerationService } from 'src/app/_services/model-generation.servi
 import { TechniqueMitigationService } from 'src/app/_services/technique-mitigation.service';
 import { Checklist } from 'src/app/_models/checklist';
 import { ChecklistService } from 'src/app/_services/checklist.service';
+import { DeletionConfirmationComponent } from '../deletion-confirmation/deletion-confirmation.component';
 
 
 @Component({
@@ -43,7 +44,7 @@ export class ChecklistListPageComponent {
   filteredIngredients: Observable<DishIngredientFilter[]>;
   searchForm: FormGroup;
   destroy: ReplaySubject<any> = new ReplaySubject<any>();
-  columnsToDisplay = ['checklist', 'device'];
+  columnsToDisplay = ['checklist', 'device', 'actions'];
   pageSize: number = 12;
   currentPage: number;
   alertMessage: string;
@@ -100,35 +101,6 @@ export class ChecklistListPageComponent {
     this.getChecklistsBySearch(this.searchForm.value.name);
   }
 
-  // filterDevices(value: string): ModelGenerationDeviceFilter[] {
-  //   this.getDevices(String(value));
-  //   return this.devices;
-  // }
-
-  // generateModel() : void {
-  //   if (this.deviceControl.valid) {
-  //     this.modelGenerationService.generateModelById(this.selectedDeviceId)
-  //       .pipe(takeUntil(this.destroy))
-  //       .subscribe({
-  //         next: response => {
-  //           this.generatedModel = response;
-  //           this.alertService.success('Чек-лист було згенеровано', true, true);
-  //         },
-  //         error: error => {
-  //           this.displayError(error);
-  //         }
-  //       });
-  //     }
-  // }
-
-  // onDeviceSelected(event: MatAutocompleteSelectedEvent): void {
-  //   this.selectedDeviceId = event.option.value.id;
-  // }
-
-  // displayDevice(device: Device): string {
-  //   return device ? device.name : '';
-  // }
-
   openTechniqueDialog(id: string): void {
     console.log(id);
     this.techniqueMitigationService.getTechniqueById(id)
@@ -172,6 +144,25 @@ export class ChecklistListPageComponent {
             }
             this.alertService.error(this.alertMessage);
           }});
+  }
+
+  confirmDeletion(id: string): void {
+    const dialogRef = this.dialog.open(DeletionConfirmationComponent);
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if (dialogResult) {
+        this.checklistService.deleteChecklist(id)
+      .pipe(takeUntil(this.destroy))
+      .subscribe({
+        next: () => {
+          this.alertService.success("Чек-лист видалено",true,true);
+          this.performSearch();
+        },
+        error: error => {
+          this.displayError(error);
+        }
+      });
+      }
+    });
   }
 
 

@@ -15,6 +15,8 @@ import { IngredientEditComponent } from './ingredient-edit/ingredient-edit.compo
 import { KitchenwareEditComponent } from './kitchenware-edit/kitchenware-edit.component';
 import { ViewTechniqueMitigationComponent } from './view-technique-mitigation/view-technique-mitigation.component';
 import { ChecklistInfoComponent } from './checklist-info/checklist-info.component';
+import { MatButtonModule } from '@angular/material/button';
+import { DeletionConfirmationComponent } from './deletion-confirmation/deletion-confirmation.component';
 
 
 
@@ -27,6 +29,7 @@ import { ChecklistInfoComponent } from './checklist-info/checklist-info.componen
     KitchenwareEditComponent,
     ViewTechniqueMitigationComponent,
     ChecklistInfoComponent,
+    DeletionConfirmationComponent
   ],
   imports: [
     MatFormFieldModule,
@@ -35,7 +38,8 @@ import { ChecklistInfoComponent } from './checklist-info/checklist-info.componen
     MatCheckboxModule,
     SharedModule,
     ChecklistRoutingModule,
-    MatDialogModule
+    MatDialogModule,
+    MatButtonModule
   ],
 })
 export class ChecklistModule { }
