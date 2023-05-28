@@ -9,6 +9,10 @@
   Для пристрою: {{checklist.deviceName}}
 </div>
 
+<div *ngIf="checklist">
+  <mat-progress-bar class="pb-margin" mode="determinate" [value]="progressValue$ | async"></mat-progress-bar>
+</div>
+
 <div class="table-container" *ngIf="checklist">
   <mat-table id="table" [dataSource]="checklist.entries" #table class="mat-cell">  
 
