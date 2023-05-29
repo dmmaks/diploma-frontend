@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ChecklistRoutingModule} from "./device-routing.module";
-import { ChecklistListPageComponent } from './device-list-page/device-list-page.component';
+import {DeviceRoutingModule} from "./device-routing.module";
+import { DeviceListPageComponent } from './device-list-page/device-list-page.component';
 import {LayoutComponent} from "./layout/layout.component";
 import {SharedModule} from "../shared/shared.module";
 import {MatDialogModule} from "@angular/material/dialog";
@@ -11,18 +11,20 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
-import { ChecklistEditComponent } from './device-edit/checklist-edit.component';
+import { DeviceEditComponent } from './device-edit/device-edit.component';
 import { MatButtonModule } from '@angular/material/button';
 import { DeletionConfirmationComponent } from './deletion-confirmation/deletion-confirmation.component';
+import { DeviceCreationComponent } from './device-creation/device-creation.component';
 
 
 
 @NgModule({
   declarations: [
     LayoutComponent,
-    ChecklistListPageComponent,
-    ChecklistEditComponent,
-    DeletionConfirmationComponent
+    DeviceListPageComponent,
+    DeviceEditComponent,
+    DeletionConfirmationComponent,
+    DeviceCreationComponent
   ],
   imports: [
     MatFormFieldModule,
@@ -30,7 +32,7 @@ import { DeletionConfirmationComponent } from './deletion-confirmation/deletion-
     FormsModule,
     MatCheckboxModule,
     SharedModule,
-    ChecklistRoutingModule,
+    DeviceRoutingModule,
     MatDialogModule,
     MatProgressBarModule,
     MatButtonModule

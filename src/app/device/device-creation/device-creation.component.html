@@ -1,0 +1,76 @@
+<div class="container">
+  <h3 class="title" mat-dialog-title>Створення пристрою</h3>
+
+  <form class="mat-dialog-content" [formGroup]="form">
+    <alert id="error-dialog"></alert>
+
+    <div class="form">
+      <mat-form-field>
+        <input matInput  placeholder="Назва" formControlName="name" required >
+        <mat-error>
+          Будь ласка, введіть назву пристрою правильно
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field>
+        <mat-label>ОС</mat-label>
+        <mat-select formControlName="os" required>
+          <mat-option *ngFor="let os of devicePredefinedValues.operatingSystems; let i=index" value="{{os}}">{{os}}</mat-option>
+        </mat-select>
+        <mat-error>Необхідно зробити вибір</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field>
+        <input matInput  placeholder="Початкова версія ОС" formControlName="osMinVersion" required >
+        <mat-error>
+          Будь ласка, введіть початкову версію ОС
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field>
+        <input matInput  placeholder="Кінцева версія ОС" formControlName="osMaxVersion" required >
+        <mat-error>
+          Будь ласка, введіть кінцеву версію ОС
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field>
+        <input matInput  placeholder="Процесор" formControlName="chipset" required >
+        <mat-error>
+          Будь ласка, введіть процесор
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field>
+        <mat-label>Тип сканера відбитків</mat-label>
+        <mat-select formControlName="fingerprintScanner">
+          <mat-option *ngFor="let fingerprintScanner of devicePredefinedValues.fingerprintSensorTypes; let i=index" value="{{fingerprintScanner}}">{{fingerprintScanner}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field>
+        <mat-label>Тип сканування обличчя</mat-label>
+        <mat-select formControlName="faceRecognition">
+          <mat-option *ngFor="let faceRecognition of devicePredefinedValues.faceRecognitionTypes; let i=index" value="{{faceRecognition}}">{{faceRecognition}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-dialog-actions>
+      <button class="mat-raised-button" (click)="close()">Закрити</button>
+      <button class="mat-raised-button mat-primary" [disabled]="!form.valid" (click)="confirmAdd()">Зберегти</button>
+    </mat-dialog-actions>
+  </form>
+</div>

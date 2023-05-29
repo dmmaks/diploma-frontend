@@ -6,17 +6,12 @@
 
 .mat-dialog-content {
   width: auto;
-  min-height: 130px;
+  height: auto;
+  min-height: 500px;
 }
 
 .form {
   display: flex;
-}
-
-mat-dialog-actions {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 mat-form-field {
@@ -30,4 +25,10 @@ mat-form-field {
 
 .title {
   font-size: 25px;
+}
+
+.mat-dialog-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

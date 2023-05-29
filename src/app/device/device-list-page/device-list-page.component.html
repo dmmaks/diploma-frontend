@@ -52,6 +52,9 @@
 
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button color="primary" (click)="createDevice()">
+          <mat-icon aria-label="Додати">add</mat-icon>
+        </button>
       </mat-header-cell>
       <mat-cell *matCellDef="let item" >
           <button mat-icon-button color="accent" (click)="editDevice(item)">

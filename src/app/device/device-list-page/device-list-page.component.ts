@@ -20,9 +20,10 @@ import { TechniqueMitigationService } from 'src/app/_services/technique-mitigati
 import { Checklist } from 'src/app/_models/checklist';
 import { ChecklistService } from 'src/app/_services/checklist.service';
 import { DeletionConfirmationComponent } from '../deletion-confirmation/deletion-confirmation.component';
-import { ChecklistEditComponent } from '../device-edit/checklist-edit.component';
 import { Device } from 'src/app/_models/device';
 import { SearchDeviceParams } from 'src/app/_models/search-device-params';
+import { DeviceCreationComponent } from '../device-creation/device-creation.component';
+import { DeviceEditComponent } from '../device-edit/device-edit.component';
 
 
 @Component({
@@ -30,7 +31,7 @@ import { SearchDeviceParams } from 'src/app/_models/search-device-params';
   templateUrl: './device-list-page.component.html',
   styleUrls: ['./device-list-page.component.scss']
 })
-export class ChecklistListPageComponent {
+export class DeviceListPageComponent {
 
   pageContentOld: Page<Dish>;
   pageContent: Page<Device>;
@@ -144,20 +145,37 @@ export class ChecklistListPageComponent {
       this.getDevicePage(pageEvent.pageIndex, pageEvent.pageSize);
   }
 
+  createDevice() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    const dialogRef = this.dialog.open(DeviceCreationComponent, dialogConfig);
+    dialogRef.afterClosed().pipe(takeUntil(this.destroy)).subscribe(() => {
+      this.getDevicePage(this.currentPage, this.pageSize);
+    })
+  }
+
   editDevice(device: Device){
-    // const dialogConfig = new MatDialogConfig();
-    // dialogConfig.disableClose = true;
-    // dialogConfig.autoFocus = true;
-    // let dataDialog = Object.assign({}, checklist);
-    // dialogConfig.data = {
-    //   checklist: dataDialog
-    // };
-    // const dialogRef = this.dialog.open(ChecklistEditComponent, dialogConfig);
-    // dialogRef.afterClosed().pipe(takeUntil(this.destroy)).subscribe((data: Checklist) => {
-    //   if(data){
-    //     checklist.name = data.name;
-    //   }
-    // })
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    let dataDialog = Object.assign({}, device);
+    dialogConfig.data = {
+      device: dataDialog
+    };
+    const dialogRef = this.dialog.open(DeviceEditComponent, dialogConfig);
+    dialogRef.afterClosed().pipe(takeUntil(this.destroy)).subscribe((data: Device) => {
+      if(data){
+        device.name = data.name;
+        device.os = data.os;
+        device.osMinVersion = data.osMinVersion;
+        device.osMaxVersion = data.osMaxVersion;
+        device.chipset = data.chipset;
+        device.fingerprintScanner = data.fingerprintScanner;
+        device.faceRecognition = data.faceRecognition;
+      }
+    })
   }
 
 

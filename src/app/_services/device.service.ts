@@ -6,6 +6,7 @@ import {Page} from "../_models/page";
 import {ActivatedRoute, Router} from "@angular/router";
 import { SearchDeviceParams } from '../_models/search-device-params';
 import { Device } from '../_models/device';
+import { DevicePredefinedValues } from '../_models/device-predefined-values';
 
 const baseUrl = `${environment.serverUrl}/devices`;
 
@@ -50,5 +51,9 @@ export class DeviceService {
 
   createDevice(device: Device): Observable<Object> {
     return this.http.post(`${baseUrl}`, device);
+  }
+
+  getDevicePredefinedValues(): Observable<DevicePredefinedValues> {
+    return this.http.get<DevicePredefinedValues>(`${baseUrl}/predefinedValues`, {});
   }
 }

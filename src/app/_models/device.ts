@@ -3,7 +3,7 @@ export interface Device {
     name: string;
     os: string;
     osMinVersion: string;
-    oosMaxVersions: string;
+    osMaxVersion: string;
     chipset: string;
     fingerprintScanner?: string;
     faceRecognition?: string;
