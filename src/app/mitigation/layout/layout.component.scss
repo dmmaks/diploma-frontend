@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;300&display=swap');
+
+mat-card {
+  font-family: Raleway;
+  max-width: 400px;
+  margin: 2em auto;
+  text-align: center;
+}
+
+mat-form-field {
+  display: block;
+  font-size: 20px;
+}
+
+mat-form-field.ng-invalid.ng-touched {
+  animation: margError;
+  animation-duration: 0.3s;
+  margin-bottom: 13px;
+}
+
+@keyframes margError {
+  from {margin-bottom: 0;}
+  to {margin-bottom: 13px;}
+}
+
+.mat-title{
+  font-size: 55.2264px;
+}
+
+.error {
+  padding: 16px;
+  width: 300px;
+  color: white;
+  background-color: red;
+}
+
+@mixin mat-table-columns($columns)
+{
+  .mat-column-
+  {
+      @each $colName, $props in $columns {
+
+          $width: map-get($props, 'width');
+          
+          &#{$colName} 
+          {
+              flex: 0 0 $width;
+              min-width: $width;
+          }  
+      }
+  }
+}
+
+.cancel-button {
+  background-color: #e1e1e1;
+  margin-right: 5px;
+}

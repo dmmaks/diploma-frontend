@@ -1,0 +1,59 @@
+<mat-card *ngIf="mitigation" fxFlex="20%" fxFlex.xs="95%">
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
+      <h2>{{title}}</h2>
+      <alert id="form"></alert>
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="Name" formControlName="name" [(ngModel)]="mitigation.name">
+        <mat-error>
+          Будь ласка, введіть назву правильно
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <textarea matInput rows="5" placeholder="Опис" formControlName="description"
+          [(ngModel)]="mitigation.description"></textarea>
+        <mat-error>
+          Будь ласка, введіть опис правильно
+        </mat-error>
+      </mat-form-field>
+
+      <div class="table-container">
+        <mat-table id="table" [dataSource]="mitigation.links" #table class="mat-cell">
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Назва</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef>Назва</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.description}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>
+              <button type="button" mat-icon-button color="primary" (click)="addLink()">
+                <mat-icon aria-label="Додати">+</mat-icon>
+              </button>
+            </mat-header-cell>
+
+            <mat-cell *matCellDef="let row; let i=index;">
+              <button type="button" mat-flat-button color="warn" (click)="removeLink(row.id)">-</button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+        </mat-table>
+        <div *ngIf="!mitigation.links.length">
+          Пом'якшень не додано
+        </div>
+      </div>
+
+      <button type="submit" mat-raised-button color="primary"> {{modeEdit ? "Підтвердити" : "Додати"}} </button>
+      <button type="button" mat-raised-button class="cancel-button" routerLink="/mitigations">Скасувати</button>
+
+    </form>
+  </mat-card-content>
+</mat-card>

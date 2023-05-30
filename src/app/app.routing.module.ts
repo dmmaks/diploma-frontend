@@ -16,6 +16,7 @@ const modelGenerationModule = () => import('./model-generation/model-generation.
 const checklistModule = () => import('./checklist/checklist.module').then(x => x.ChecklistModule);
 const deviceModule = () => import('./device/device.module').then(x => x.DeviceModule);
 const techniqueModule = () => import('./technique/technique.module').then(x => x.TechniqueModule);
+const mitigationModule = () => import('./mitigation/mitigation.module').then(x => x.MitigationModule);
 
 const routes: Routes = [
   { path: '', redirectTo: '/account/signin', pathMatch: 'full' },
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'checklists', loadChildren: checklistModule, canActivate: [AuthGuard], data: { roles: [Role.Admin, Role.User, Role.Moderator] } },
   { path: 'devices', loadChildren: deviceModule, canActivate: [AuthGuard], data: { roles: [Role.Moderator] } },
   { path: 'techniques', loadChildren: techniqueModule, canActivate: [AuthGuard], data: { roles: [Role.Moderator] } },
+  { path: 'mitigations', loadChildren: mitigationModule, canActivate: [AuthGuard], data: { roles: [Role.Moderator] } },
   { path: '**', redirectTo: '/account/signin', pathMatch: 'full' }
 ];
 

@@ -85,4 +85,25 @@ export class TechniqueMitigationService {
     return this.http.put(`${baseUrl}/techniques/${dto.techniqueWithLinks.id}`, dto);
   }
 
+  getMitigationsBySearch(searchParams: StandardSearchParams, pageSize: number): Observable<Page<TechniqueMitigation>> {
+    this.searchParams = searchParams;
+    return this.getMitigationList(0, this.searchParams, pageSize);
+  }
+
+  getMitigationsByPageNum(currentPage: number, pageSize: number): Observable<Page<TechniqueMitigation>> {
+    return this.getMitigationList(currentPage, this.searchParams, pageSize);
+  }
+
+  deleteMitigation(id: string) : Observable<Object> {
+    return this.http.delete(`${baseUrl}/mitigations/${id}`);
+  }
+
+  createMitigation(dto: TechniqueMitigationWithLinks): Observable<Object> {
+    return this.http.post(`${baseUrl}/mitigations`, dto);
+  }
+
+  editMitigation(dto: TechniqueMitigationWithLinks): Observable<Object>{
+    return this.http.put(`${baseUrl}/mitigations/${dto.id}`, dto);
+  }
+
 }

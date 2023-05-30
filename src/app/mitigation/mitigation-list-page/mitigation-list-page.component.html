@@ -1,0 +1,55 @@
+<mat-card fxFlex="40%" fxFlex.xs="95%">
+  <mat-card-content>
+    <form [formGroup]="searchForm" (ngSubmit)="getMitigationsBySearch()" class="mitigation-search-form">
+      <div class="filters">
+        <div class="main-filters">
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="Шукати за назвою" formControlName="name">
+          </mat-form-field>
+          <button type="submit" class="btn-filter" mat-flat-button color="accent">Фільтрувати</button>
+        </div>
+      </div>
+
+    </form>
+
+
+    <div class="table-container" *ngIf="pageContent">
+      <mat-table id="table" [dataSource]="pageContent.content" #table class="mat-cell" matSort matSortDisableClear
+        [matSortDirection]="sortOrder" (matSortChange)="sortData($event.direction)">
+
+        <ng-container matColumnDef="name" sortActionDescription="Сортувати за назвою">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Назва</mat-header-cell>
+          <mat-cell class="content-text" *matCellDef="let item" (click)="openMitigationDialog(item.id)">{{item.name}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef>Опис</mat-header-cell>
+          <mat-cell class="content-text" *matCellDef="let item">{{ (item.description.length>30)? (item.description | slice:0:30)+'...':(item.description) }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <button mat-icon-button color="primary" [routerLink]="['add']">
+              <mat-icon aria-label="Додати">add</mat-icon>
+            </button>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let item">
+            <button mat-icon-button color="accent" [routerLink]="['edit', item.id]">
+              <mat-icon aria-label="Редагувати">edit</mat-icon>
+            </button>
+            <button mat-icon-button color="accent">
+              <mat-icon aria-label="Видалити" (click)="confirmDeletion(item.id)">delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+        <mat-row *matRowDef="let item; columns: columnsToDisplay"></mat-row>
+      </mat-table>
+    </div>
+
+    <mat-paginator *ngIf="pageContent" [length]="pageContent.totalElements" [pageIndex]="currentPage"
+      [pageSize]="pageSize" [pageSizeOptions]="[12, 20, 40]" (page)="paginationHandler($event)">
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>
