@@ -7,6 +7,7 @@ import { TechniqueMitigation } from '../_models/technique-mitigation';
 import { StandardSearchParams } from '../_models/standard-search-params';
 import { Page } from '../_models';
 import { TechniqueMitigationWithLinks } from '../_models/technique-mitigation-with-links';
+import { Applicability } from '../_models/applicability';
 
 const baseUrl = `${environment.serverUrl}/techniquesMitigations`;
 
@@ -36,8 +37,12 @@ export class TechniqueMitigationService {
     return this.http.get<TechniqueMitigationWithLinks>(`${baseUrl}/techniques/withLinks/${techniqueId}`);
   }
 
-  getMitigationWithLinksById(mitigationIs: string): Observable<TechniqueMitigationWithLinks> {
-    return this.http.get<TechniqueMitigationWithLinks>(`${baseUrl}/mitigations/withLinks/${mitigationIs}`);
+  getMitigationWithLinksById(mitigationId: string): Observable<TechniqueMitigationWithLinks> {
+    return this.http.get<TechniqueMitigationWithLinks>(`${baseUrl}/mitigations/withLinks/${mitigationId}`);
+  }
+
+  getApplicabilityByTechniqueId(techniqueId: string): Observable<Applicability> {
+    return this.http.get<Applicability>(`${baseUrl}/techniques/applicability/${techniqueId}`);
   }
 
   getTechniqueList(currentPage: number, searchedParams: StandardSearchParams, pageSize: number): Observable<Page<TechniqueMitigation>> {

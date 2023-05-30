@@ -1,6 +1,6 @@
 import { FormGroup } from "@angular/forms";
 
-export class DishFormError{
+export class FormError {
 form: FormGroup;
 
   get control() {

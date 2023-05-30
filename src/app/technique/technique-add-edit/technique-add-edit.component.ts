@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReplaySubject, takeUntil } from 'rxjs';
 import { Dish, Ingredient, NewKitchenware } from 'src/app/_models';
 import { AlertService, DishService, IngredientService } from 'src/app/_services';
 import { KitchenwareService } from 'src/app/_services/kitchenware.service';
-import { DishFormError } from './technique-form-error';
+import { FormError } from './technique-form-error';
 import { DevicePredefinedValues } from 'src/app/_models/device-predefined-values';
 import { TechniqueMitigation } from 'src/app/_models/technique-mitigation';
 import { TechniqueMitigationService } from 'src/app/_services/technique-mitigation.service';
@@ -20,15 +20,16 @@ import { DeviceService } from 'src/app/_services/device.service';
   templateUrl: './technique-add-edit.component.html',
   styleUrls: ['./technique-add-edit.component.scss']
 })
-export class TechniqueAddEditComponent extends DishFormError implements OnInit {
+export class TechniqueAddEditComponent implements OnInit {
 
-columnsToDisplay: string[] = ['name', 'actions'];
-devicePredefinedValues: DevicePredefinedValues;
-destroy: ReplaySubject<any> = new ReplaySubject<any>();
-technique: TechniqueMitigationWithLinks;
-applicability: Applicability;
-title: string;
-modeEdit: boolean = false;
+  columnsToDisplay: string[] = ['name', 'actions'];
+  devicePredefinedValues: DevicePredefinedValues;
+  destroy: ReplaySubject<any> = new ReplaySubject<any>();
+  technique: TechniqueMitigationWithLinks;
+  applicability: Applicability;
+  title: string;
+  modeEdit: boolean = false;
+  form: FormGroup;
 
   constructor(
     private dialog: MatDialog,
@@ -38,8 +39,7 @@ modeEdit: boolean = false;
     private alertService: AlertService,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) { 
-    super();
+  ) {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required, Validators.maxLength(40)]],
       description: ['', [Validators.required, Validators.maxLength(1000)]],
@@ -54,17 +54,20 @@ modeEdit: boolean = false;
 
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.params['id'];
-    if(id){
+    if (id) {
       this.modeEdit = true;
       this.techniqueMitigationService.getTechniqueWithLinksById(id).pipe(takeUntil(this.destroy)).subscribe({
-        next: (data: TechniqueMitigationWithLinks) => {this.technique = data; this.technique.id = id},
+        next: (data: TechniqueMitigationWithLinks) => { this.technique = data; this.technique.id = id },
         error: () => this.router.navigate(['/techniques'])
       });
-      // add getting of applicability
+      this.techniqueMitigationService.getApplicabilityByTechniqueId(id).pipe(takeUntil(this.destroy)).subscribe({
+        next: (data: Applicability) => { this.applicability = data },
+        error: () => this.router.navigate(['/techniques'])
+      });
     }
     else {
-      this.technique = { id: "", name: "", description: "", links: []}
-      this.applicability = {os: "", osMinVersion: "", osMaxVersion: "", chipset: "", fingerprintScanner: "", faceRecognition: ""}
+      this.technique = { id: "", name: "", description: "", links: [] }
+      this.applicability = { os: "", osMinVersion: "", osMaxVersion: "", chipset: "", fingerprintScanner: "", faceRecognition: "" }
     }
     this.title = this.modeEdit ? "Редагування загрози" : "Додавання загрози";
     this.getDevicePredefinedValues();
@@ -74,8 +77,8 @@ modeEdit: boolean = false;
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = false;
-    dialogConfig.data = { 
-      selectedLinks: this.technique.links;
+    dialogConfig.data = {
+      selectedLinks: this.technique.links
     }
     const dialogRef = this.dialog.open(LinksEditComponent, dialogConfig);
     dialogRef.afterClosed().pipe(takeUntil(this.destroy)).subscribe((data: TechniqueMitigation[]) => this.technique.links = [...data]);
@@ -83,10 +86,10 @@ modeEdit: boolean = false;
 
   getDevicePredefinedValues(): void {
     this.deviceService.getDevicePredefinedValues().pipe(takeUntil(this.destroy))
-    .subscribe({
-      next: data => this.devicePredefinedValues = data,
-      error: () => this.technique.links = []
-    });
+      .subscribe({
+        next: data => this.devicePredefinedValues = data,
+        error: () => this.technique.links = []
+      });
   }
 
   removeLink(id: string): void {
@@ -94,26 +97,26 @@ modeEdit: boolean = false;
   }
 
   onSubmitForm(): void {
-    this.alertService.clear();
-    if(this.form.valid){
-      if(!this.modeEdit){
-      this.dishService.createDish(this.dishModel).pipe(takeUntil(this.destroy)).subscribe({
-        next: () => {
-          this.alertService.success("Dish successfully added!", true, true);
-          this.router.navigate(['../'], { relativeTo: this.activatedRoute });
-        },
-        error: () => this.alertService.error("There was a server error. Please try again later.", false, false, "formDish")
-      });
-      }
-    else {
-      this.dishService.editDish(this.dishModel).pipe(takeUntil(this.destroy)).subscribe({
-        next: () => {
-          this.alertService.success("Dish successfully updated!", true, true);
-          this.router.navigateByUrl("/dishes");
-        },
-        error: () => this.alertService.error("There was a server error. Please try again later.", false, false, "formDish")
-      });
-    }
-  }
+    //   this.alertService.clear();
+    //   if(this.form.valid){
+    //     if(!this.modeEdit){
+    //     this.dishService.createDish(this.dishModel).pipe(takeUntil(this.destroy)).subscribe({
+    //       next: () => {
+    //         this.alertService.success("Dish successfully added!", true, true);
+    //         this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+    //       },
+    //       error: () => this.alertService.error("There was a server error. Please try again later.", false, false, "formDish")
+    //     });
+    //     }
+    //   else {
+    //     this.dishService.editDish(this.dishModel).pipe(takeUntil(this.destroy)).subscribe({
+    //       next: () => {
+    //         this.alertService.success("Dish successfully updated!", true, true);
+    //         this.router.navigateByUrl("/dishes");
+    //       },
+    //       error: () => this.alertService.error("There was a server error. Please try again later.", false, false, "formDish")
+    //     });
+    //   }
+    // }
   }
 }
