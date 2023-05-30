@@ -5,4 +5,33 @@
     <h1><b>{{technique.name}}</b></h1>
     <p>{{technique.description}}</p>
 </div>
+<br>
+<div *ngIf="applicability">
+  <table class="mat-table">
+    <tr class="mat-row">
+      <td class="mat-cell">ОС:</td>
+      <td class="mat-cell">{{applicability.os}}</td>
+    </tr>
+    <tr class="mat-row">
+      <td class="mat-cell">Мінімальна версія ОС:</td>
+      <td class="mat-cell">{{applicability.osMinVersion}}</td>
+    </tr>
+    <tr class="mat-row">
+      <td class="mat-cell">Максимальна версія ОС:</td>
+      <td class="mat-cell">{{applicability.osMaxVersion}}</td>
+    </tr>
+    <tr class="mat-row">
+      <td class="mat-cell">Процесор:</td>
+      <td class="mat-cell">{{applicability.chipset}}</td>
+    </tr>
+    <tr class="mat-row">
+      <td class="mat-cell">Сканер відбитків:</td>
+      <td class="mat-cell">{{applicability.fingerprintScanner}}</td>
+    </tr>
+    <tr class="mat-row">
+      <td class="mat-cell">Розпізнавання обличчя:</td>
+      <td class="mat-cell">{{applicability.faceRecognition}}</td>
+    </tr>
+  </table>
+</div>
 </div>

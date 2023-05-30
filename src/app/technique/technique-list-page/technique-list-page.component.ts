@@ -142,7 +142,6 @@ export class TechniqueListPageComponent {
   }
 
   openTechniqueDialog(id: string): void {
-    console.log(id);
     this.techniqueMitigationService.getTechniqueById(id)
         .pipe(takeUntil(this.destroy))
         .subscribe({
