@@ -8,8 +8,9 @@
   }
 
 @include mat-table-columns(( 
-      name: (width: 65%),
-      actions: (width: 35%),
+      name: (width: 25%),
+      description: (width: 50%),
+      actions: (width: 25%),
   ));
 
 form button{

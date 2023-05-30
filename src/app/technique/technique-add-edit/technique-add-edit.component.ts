@@ -21,7 +21,7 @@ import { DeviceService } from 'src/app/_services/device.service';
 })
 export class TechniqueAddEditComponent implements OnInit {
 
-  columnsToDisplay: string[] = ['name', 'actions'];
+  columnsToDisplay: string[] = ['name', 'description', 'actions'];
   devicePredefinedValues: DevicePredefinedValues;
   destroy: ReplaySubject<any> = new ReplaySubject<any>();
   technique: TechniqueMitigationWithLinks;
@@ -115,6 +115,7 @@ export class TechniqueAddEditComponent implements OnInit {
       if (!this.modeEdit) {
         this.applicability = { os: this.form.value.os, osMinVersion: this.form.value.osMinVersion, osMaxVersion: this.form.value.osMaxVersion, 
           chipset: this.form.value.chipset, fingerprintScanner: this.form.value.fingerprintScanner, faceRecognition: this.form.value.faceRecognition }
+          console.log(this.applicability);
         this.techniqueMitigationService.createTechnique({ techniqueWithLinks: this.technique, applicability: this.applicability }).pipe(takeUntil(this.destroy)).subscribe({
           next: () => {
             this.alertService.success("Загрозу додано.", true, true);
@@ -124,13 +125,16 @@ export class TechniqueAddEditComponent implements OnInit {
         });
       }
       else {
-        // this.dishService.editDish(this.dishModel).pipe(takeUntil(this.destroy)).subscribe({
-        //   next: () => {
-        //     this.alertService.success("Dish successfully updated!", true, true);
-        //     this.router.navigateByUrl("/dishes");
-        //   },
-        //   error: () => this.alertService.error("There was a server error. Please try again later.", false, false)
-        // });
+        this.applicability = { os: this.form.value.os, osMinVersion: this.form.value.osMinVersion, osMaxVersion: this.form.value.osMaxVersion, 
+          chipset: this.form.value.chipset, fingerprintScanner: this.form.value.fingerprintScanner, faceRecognition: this.form.value.faceRecognition }
+          console.log(this.applicability);
+        this.techniqueMitigationService.editTechnique({ techniqueWithLinks: this.technique, applicability: this.applicability }).pipe(takeUntil(this.destroy)).subscribe({
+          next: () => {
+            this.alertService.success("Загрозу оновлено.", true, true);
+            this.router.navigateByUrl("/techniques");
+          },
+          error: () => this.alertService.error("There was a server error. Please try again later.", false, false)
+        });
       }
     }
   }

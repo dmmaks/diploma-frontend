@@ -80,4 +80,9 @@ export class TechniqueMitigationService {
   createTechnique(dto: TechniqueApplicabilityWithLinks): Observable<Object> {
     return this.http.post(`${baseUrl}/techniques`, dto);
   }
+
+  editTechnique(dto: TechniqueApplicabilityWithLinks): Observable<Object>{
+    return this.http.put(`${baseUrl}/techniques/${dto.techniqueWithLinks.id}`, dto);
+  }
+
 }
