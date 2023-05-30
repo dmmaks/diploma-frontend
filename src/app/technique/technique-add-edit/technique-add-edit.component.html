@@ -29,12 +29,12 @@
           <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef>
               <button type="button" mat-icon-button color="primary" (click)="addLink()">
-                <mat-icon aria-label="Додати">add</mat-icon>
+                <mat-icon aria-label="Додати">Додати</mat-icon>
               </button>
             </mat-header-cell>
 
             <mat-cell *matCellDef="let row; let i=index;">
-              <button type="button" mat-flat-button color="warn" (click)="removeLink(row.id)">Remove</button>
+              <button type="button" mat-flat-button color="warn" (click)="removeLink(row.id)">Прибрати</button>
             </mat-cell>
           </ng-container>
 
@@ -48,31 +48,29 @@
 
       <mat-form-field class="full-width-input">
         <mat-label>ОС</mat-label>
-        <mat-select formControlName="os" [(ngModel)]="applicability.os">
+        <mat-select formControlName="os" >
           <mat-option *ngFor="let os of devicePredefinedValues.operatingSystems; let i=index"
-            value="{{os}}">{{os}}</mat-option>
+            value="os">{{os}}</mat-option>
         </mat-select>
         <mat-error>Необхідно зробити вибір</mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Початкова версія ОС" formControlName="osMinVersion"
-          [(ngModel)]="applicability.osMinVersion">
+        <input matInput placeholder="Початкова версія ОС" formControlName="osMinVersion">
         <mat-error>
           Будь ласка, введіть початкову версію ОС
         </mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Кінцева версія ОС" formControlName="osMaxVersion"
-          [(ngModel)]="applicability.osMaxVersion">
+        <input matInput placeholder="Кінцева версія ОС" formControlName="osMaxVersion">
         <mat-error>
           Будь ласка, введіть кінцеву версію ОС
         </mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Процесор" formControlName="chipset" [(ngModel)]="applicability.chipset">
+        <input matInput placeholder="Процесор" formControlName="chipset">
         <mat-error>
           Будь ласка, введіть процесор
         </mat-error>
@@ -80,7 +78,7 @@
 
       <mat-form-field>
         <mat-label>Тип сканера відбитків</mat-label>
-        <mat-select formControlName="fingerprintScanner" [(ngModel)]="applicability.fingerprintScanner">
+        <mat-select formControlName="fingerprintScanner" >
           <mat-option *ngFor="let fingerprintScanner of devicePredefinedValues.fingerprintSensorTypes; let i=index"
             value="{{fingerprintScanner}}">{{fingerprintScanner}}</mat-option>
         </mat-select>
@@ -88,7 +86,7 @@
 
       <mat-form-field>
         <mat-label>Тип сканування обличчя</mat-label>
-        <mat-select formControlName="faceRecognition" [(ngModel)]="applicability.faceRecognition">
+        <mat-select formControlName="faceRecognition">
           <mat-option *ngFor="let faceRecognition of devicePredefinedValues.faceRecognitionTypes; let i=index"
             value="{{faceRecognition}}">{{faceRecognition}}</mat-option>
         </mat-select>

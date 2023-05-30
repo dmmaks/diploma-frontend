@@ -51,9 +51,8 @@ table{
 }
 
 @include mat-table-columns(( 
-      image: (width: 25%),
-      name: (width: 27%),
-      category: (width: 23%),
+      name: (width: 25%),
+      description: (width: 50%),
       actions: (width: 25%),
   ));
 
@@ -99,4 +98,8 @@ table{
   
   ::ng-deep .icon-outside .mat-dialog-container {
    overflow: unset
+  }
+
+.mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {
+    color: white;
   }

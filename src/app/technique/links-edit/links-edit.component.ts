@@ -6,7 +6,10 @@ import { MatSort } from '@angular/material/sort';
 import { finalize, merge, ReplaySubject, takeUntil } from 'rxjs';
 import { NewKitchenware } from 'src/app/_models';
 import { SearchKitchenwareParams } from 'src/app/_models/search-kitchenware-params';
+import { StandardSearchParams } from 'src/app/_models/standard-search-params';
+import { TechniqueMitigation } from 'src/app/_models/technique-mitigation';
 import { KitchenwareService } from 'src/app/_services/kitchenware.service';
+import { TechniqueMitigationService } from 'src/app/_services/technique-mitigation.service';
 
 @Component({
   selector: 'links-edit',
@@ -15,95 +18,86 @@ import { KitchenwareService } from 'src/app/_services/kitchenware.service';
 })
 export class LinksEditComponent implements AfterViewInit, OnDestroy {
   formFilter: FormGroup;
-  displayedColumns = ['image', 'name', 'kitchenwareCategory', 'actions'];
-  dataSource: NewKitchenware[] = [];
+  columnsToDisplay = ['name', 'description', 'actions'];
+  links: TechniqueMitigation[] = [];
   destroy: ReplaySubject<any> = new ReplaySubject<any>();
   isLoadingResults = true;
   resultsLength = 0;
-  listCategory: string[];
-  selectedKitchenware: NewKitchenware[] = [];
+  selectedLinks: TechniqueMitigation[] = [];
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private dialogRef: MatDialogRef<LinksEditComponent>,
-    private kitchenwareService: KitchenwareService, 
-              private formBuilder: FormBuilder,
-              @Inject(MAT_DIALOG_DATA) data: any) {
-      this.selectedKitchenware = data.selectedKitchenware;
-      this.listCategory = data.listCategoryKitchenware;
-      this.formFilter = this.formBuilder.group({
+    private techniqueMitigationService: TechniqueMitigationService,
+    private formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) data: any) {
+    this.selectedLinks = data.selectedLinks;
+    this.formFilter = this.formBuilder.group({
       searchText: [],
-      status: [],
-      kitchenwareCategories: [],
+      status: []
     });
   }
 
   ngAfterViewInit(): void {
     this.loadData();
     this.sort.sortChange.pipe(takeUntil(this.destroy)).subscribe(() => this.paginator.pageIndex = 0);
-   merge(this.sort.sortChange, this.paginator.page).pipe(takeUntil(this.destroy)).subscribe(() => this.loadData());
- }
+    merge(this.sort.sortChange, this.paginator.page).pipe(takeUntil(this.destroy)).subscribe(() => this.loadData());
+  }
 
   ngOnDestroy(): void {
     this.destroy.next(null);
     this.destroy.complete();
   }
 
-  OnSubmitFilter(){
+  OnSubmitFilter() {
     this.paginator.pageIndex = 0;
     this.loadData();
   }
 
-loadData(){
-  const kitchenwareFilter: SearchKitchenwareParams = {
-    name: this.searchText === null ? "" : this.searchText, order: this.sort.direction, 
-    categories: this.kitchenwareCategories === null ? "": this.kitchenwareCategories, active: true
-  }
-  this.isLoadingResults = true;
-  this.kitchenwareService.getKitchenwareList(this.paginator.pageIndex, kitchenwareFilter, 
-    this.paginator.pageSize).pipe(takeUntil(this.destroy),
-  finalize(() => this.isLoadingResults = false)).subscribe({
-  next: data => {
-      this.resultsLength = data.totalElements;
-      this.dataSource = data.content;
-      const matTable= document.getElementById('table');
-      if(matTable)
-        matTable.scrollIntoView();
-  },
-  error: ()=> {
-  this.dataSource = [];
-  }
-  });
-}
-
-  addKitchenware(kitchenware: NewKitchenware){
-    kitchenware.amount = 1;
-    this.selectedKitchenware.push(kitchenware);
+  loadData() {
+    const searchParams: StandardSearchParams = {
+      name: this.searchText === null ? "" : this.searchText, order: this.sort.direction
+    }
+    this.isLoadingResults = true;
+    this.techniqueMitigationService.getMitigationList(this.paginator.pageIndex, searchParams,
+      this.paginator.pageSize).pipe(takeUntil(this.destroy),
+        finalize(() => this.isLoadingResults = false)).subscribe({
+          next: data => {
+            this.resultsLength = data.totalElements;
+            this.links = data.content;
+            const matTable = document.getElementById('table');
+            if (matTable)
+              matTable.scrollIntoView();
+          },
+          error: () => {
+            this.links = [];
+          }
+        });
   }
 
-  cancelAddKitchenware(kitchenwareId: string){
-    this.selectedKitchenware = this.selectedKitchenware.filter(u => u.id !== kitchenwareId);
+  addLink(link: TechniqueMitigation) {
+    this.selectedLinks.push(link);
   }
 
-  get filterControl(){
+  cancelAddingLink(linkId: string) {
+    this.selectedLinks = this.selectedLinks.filter(v => v.id !== linkId);
+  }
+
+  get filterControl() {
     return this.formFilter.controls;
   }
 
-  get searchText(){
+  get searchText() {
     return this.filterControl['searchText'].value;
   }
 
-  get kitchenwareCategories(){
-    return this.formFilter.controls['kitchenwareCategories'].value
+  checkSelectedLinks(id: string): boolean {
+    return this.selectedLinks.some(link => link.id == id);
   }
 
-  checkSelectedKitchenware(id: string): boolean {
-    return this.selectedKitchenware.some(kitch => kitch.id == id);
-  }
-
-  close(): void{
-    this.dialogRef.close(this.selectedKitchenware);
+  close(): void {
+    this.dialogRef.close(this.selectedLinks);
   }
 
 }

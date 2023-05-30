@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReplaySubject, takeUntil } from 'rxjs';
 import { Dish, Ingredient, NewKitchenware } from 'src/app/_models';
 import { AlertService, DishService, IngredientService } from 'src/app/_services';
 import { KitchenwareService } from 'src/app/_services/kitchenware.service';
-import { FormError } from './technique-form-error';
 import { DevicePredefinedValues } from 'src/app/_models/device-predefined-values';
 import { TechniqueMitigation } from 'src/app/_models/technique-mitigation';
 import { TechniqueMitigationService } from 'src/app/_services/technique-mitigation.service';
@@ -40,16 +39,7 @@ export class TechniqueAddEditComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    this.form = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(40)]],
-      description: ['', [Validators.required, Validators.maxLength(1000)]],
-      os: [''],
-      osMinVersion: ['', [Validators.maxLength(10)]],
-      osMaxVersion: ['', [Validators.maxLength(10)]],
-      chipset: ['', [Validators.maxLength(40)]],
-      fingerprintScanner: [''],
-      faceRecognition: ['']
-    });
+    this.form = this.formBuilder.group({});
   }
 
   ngOnInit(): void {
@@ -57,17 +47,40 @@ export class TechniqueAddEditComponent implements OnInit {
     if (id) {
       this.modeEdit = true;
       this.techniqueMitigationService.getTechniqueWithLinksById(id).pipe(takeUntil(this.destroy)).subscribe({
-        next: (data: TechniqueMitigationWithLinks) => { this.technique = data; this.technique.id = id },
+        next: (data: TechniqueMitigationWithLinks) => {
+          this.technique = data;
+          this.technique.id = id;
+          this.form.addControl('name', new FormControl(this.technique.name, [Validators.required, Validators.maxLength(40)]));
+          this.form.addControl('description', new FormControl(this.technique.description, [Validators.required, Validators.maxLength(1000)]));
+        },
         error: () => this.router.navigate(['/techniques'])
       });
       this.techniqueMitigationService.getApplicabilityByTechniqueId(id).pipe(takeUntil(this.destroy)).subscribe({
-        next: (data: Applicability) => { this.applicability = data },
+        next: (data: Applicability) => { 
+          this.applicability = data;
+          this.form.addControl('os', new FormControl(this.applicability.os, [Validators.required, Validators.maxLength(40)]));
+          this.form.addControl('osMinVersion', new FormControl(this.applicability.osMinVersion, [Validators.maxLength(10)]));
+          this.form.addControl('osMaxVersion', new FormControl(this.applicability.osMaxVersion, [Validators.maxLength(10)]));
+          this.form.addControl('chipset', new FormControl(this.applicability.chipset, [Validators.maxLength(40)]));
+          this.form.addControl('fingerprintScanner', new FormControl(this.applicability.fingerprintScanner));
+          this.form.addControl('faceRecognition', new FormControl(this.applicability.faceRecognition));
+        },
         error: () => this.router.navigate(['/techniques'])
       });
     }
     else {
       this.technique = { id: "", name: "", description: "", links: [] }
       this.applicability = { os: "", osMinVersion: "", osMaxVersion: "", chipset: "", fingerprintScanner: "", faceRecognition: "" }
+      this.form = this.formBuilder.group({
+        name: ['', [Validators.required, Validators.maxLength(40)]],
+        description: ['', [Validators.required, Validators.maxLength(1000)]],
+        os: [''],
+        osMinVersion: ['', [Validators.maxLength(10)]],
+        osMaxVersion: ['', [Validators.maxLength(10)]],
+        chipset: ['', [Validators.maxLength(40)]],
+        fingerprintScanner: [''],
+        faceRecognition: ['']
+      });
     }
     this.title = this.modeEdit ? "Редагування загрози" : "Додавання загрози";
     this.getDevicePredefinedValues();

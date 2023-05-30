@@ -54,6 +54,15 @@ export class TechniqueMitigationService {
           .set('order', searchedParams.order == 'asc')});
   }
 
+  getMitigationList(currentPage: number, searchedParams: StandardSearchParams, pageSize: number): Observable<Page<TechniqueMitigation>> {
+    return this.http.get<Page<TechniqueMitigation>>(`${baseUrl}/mitigations`, {
+        params: new HttpParams()
+          .set('pageSize', pageSize)
+          .set('pageNum', currentPage)
+          .set('name', searchedParams.name)
+          .set('order', searchedParams.order == 'asc')});
+  }
+
   getTechniquesBySearch(searchParams: StandardSearchParams, pageSize: number): Observable<Page<TechniqueMitigation>> {
     this.searchParams = searchParams;
     return this.getTechniqueList(0, this.searchParams, pageSize);
