@@ -5,40 +5,36 @@ import {Observable, ReplaySubject} from "rxjs";
 import {AlertService, AuthService, DishService, IngredientService} from "../../_services";
 import {Page} from "../../_models/page";
 import {map, startWith, takeUntil} from "rxjs/operators";
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import { Dish } from 'src/app/_models/dish';
 import { IngredientFilter } from 'src/app/_models/_filters/ingredient.filter';
 import { DishIngredientFilter } from 'src/app/_models/_filters/dish-ingredient-filter';
-import { MatChipInputEvent } from '@angular/material/chips';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { SearchDishParams } from 'src/app/_models/search-dish-params';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { ViewTechniqueMitigationComponent } from '../view-technique-mitigation/view-technique-mitigation.component';
 import { Sort, SortDirection } from '@angular/material/sort';
-import { ModelGenerationDeviceFilter } from 'src/app/_models/_filters/model-generation-device-filter';
-import { StandardSearchParams } from 'src/app/_models/standard-search-params';
 import { DeviceService } from 'src/app/_services/device.service';
-import { GeneratedModel } from 'src/app/_models/generated-model';
-import { Device } from 'src/app/_models/device';
 import { ModelGenerationService } from 'src/app/_services/model-generation.service';
 import { TechniqueMitigationService } from 'src/app/_services/technique-mitigation.service';
+import { Checklist } from 'src/app/_models/checklist';
+import { ChecklistService } from 'src/app/_services/checklist.service';
+import { DeletionConfirmationComponent } from '../deletion-confirmation/deletion-confirmation.component';
+import { Device } from 'src/app/_models/device';
+import { StandardSearchParams } from 'src/app/_models/standard-search-params';
+import { TechniqueMitigation } from 'src/app/_models/technique-mitigation';
+import { TechniqueInfoComponent } from '../technique-info/technique-info.component';
 
 
 @Component({
-  selector: 'generation-selection',
-  templateUrl: './generation-selection.component.html',
-  styleUrls: ['./generation-selection.component.scss']
+  selector: 'technique-list-page',
+  templateUrl: './technique-list-page.component.html',
+  styleUrls: ['./technique-list-page.component.scss']
 })
-export class ModelGenerationComponent {
-  length: number;
-  deviceControl = new FormControl();
-  devices: ModelGenerationDeviceFilter[] = [];
-  filteredDevices: Observable<ModelGenerationDeviceFilter[]>;
-  generatedModel: GeneratedModel;
-  selectedDeviceId: string;
+export class TechniqueListPageComponent {
 
-  pageContent: Page<Dish>;
+  pageContentOld: Page<Dish>;
+  pageContent: Page<TechniqueMitigation>;
   categories: string[] = [];
   ingredients: DishIngredientFilter[] = [];
   selectedIngredients: DishIngredientFilter[] = [];
@@ -46,7 +42,7 @@ export class ModelGenerationComponent {
   filteredIngredients: Observable<DishIngredientFilter[]>;
   searchForm: FormGroup;
   destroy: ReplaySubject<any> = new ReplaySubject<any>();
-  columnsToDisplay = ['technique', 'mitigation'];
+  columnsToDisplay = ['name', 'description', 'actions'];
   pageSize: number = 12;
   currentPage: number;
   alertMessage: string;
@@ -60,96 +56,89 @@ export class ModelGenerationComponent {
   @ViewChild('ingredientInput') ingredientInput: ElementRef<HTMLInputElement>;
 
   constructor(
-    private deviceService: DeviceService,
-    private modelGenerationService: ModelGenerationService,
     private techniqueMitigationService: TechniqueMitigationService,
     private dishService: DishService,
     private ingredientService: IngredientService,
     private alertService: AlertService,
     private dialog: MatDialog,
-    private formBuilder: FormBuilder,
-    private authService: AuthService
+    private formBuilder: FormBuilder
   ) {
   }
   
 
   ngOnInit(): void {
-    this.getIngredients("");
-    this.getDevices("");
-    this.getCategories();
     this.searchForm = this.createFormGroup();
-    this.getBySearch();
-    this.filteredDevices = this.deviceControl.valueChanges.pipe(
-      startWith(null),
-      map((device: string) => (device ? this.filterDevices(device) : this.devices.slice())),
-    );
-    this.filteredIngredients = this.ingredientControl.valueChanges.pipe(
-      startWith(null),
-      map((ingredient: string) => (ingredient ? this.filterIngredients(ingredient) : this.ingredients.slice())),
-    );
-    this.userRole = this.authService.accountValue?.role;
-    if (this.userRole !== 'ROLE_ADMIN') {
-      // this.columnsToDisplay.push('actions');
-      this.isWithActions = 'without-actions';
-    }
-    else {
-      this.isWithActions = 'with-actions';
-    }
+    this.getTechniquesBySearch();
   }
 
   createFormGroup(): FormGroup {
     return this.formBuilder.group({
-      name: [''],
-      categories: ['']
+      name: ['']
     });
   }
 
-  getDevices(searchText: string) {
-    this.devices = [];
-    const searchParams: StandardSearchParams = {name: searchText, order: 'asc'};
-    this.deviceService.getDevicesBySearch(searchParams, 10)
+
+  getTechniquesBySearch(): void {
+    const filter: StandardSearchParams = this.searchForm.value;
+    filter.order = this.sortOrder;
+    this.techniqueMitigationService.getTechniquesBySearch(this.searchForm.value, this.pageSize)
       .pipe(takeUntil(this.destroy))
-      .subscribe(
-        {next: response => {
-          for (let device of response.content) {
-            if(device.id !== undefined) {
-              this.devices.push({ name: device.name, id: device.id});
-            }
-          }
-          },
-          error: error => {
-            this.displayError(error);
-          }}
-      )
+      .subscribe({
+        next: response => {
+          this.pageContent = response;
+          this.currentPage = 0;
+        },
+        error: error => {
+          this.displayError(error);
+        }
+      });
   }
 
-  filterDevices(value: string): ModelGenerationDeviceFilter[] {
-    this.getDevices(String(value));
-    return this.devices;
+  getTechniquePage(pageIndex: number, pageSize: number): void {
+    this.techniqueMitigationService.getTechniquesByPageNum(pageIndex, pageSize)
+      .pipe(takeUntil(this.destroy))
+      .subscribe({
+        next: response => {
+          if (response.content.length === 0) {
+            this.getTechniquePage(pageIndex - 1, pageSize);
+          }
+          this.pageContent = response;
+          this.currentPage = pageIndex;
+          this.pageSize = pageSize;
+        },
+        error: error => {
+          this.displayError(error);
+        }
+      });
   }
 
-  generateModel() : void {
-    if (this.deviceControl.valid) {
-      this.modelGenerationService.generateModelById(this.selectedDeviceId)
-        .pipe(takeUntil(this.destroy))
-        .subscribe({
-          next: response => {
-            this.generatedModel = response;
-            this.alertService.success('Чек-лист було згенеровано', true, true);
-          },
-          error: error => {
-            this.displayError(error);
-          }
-        });
+  confirmDeletion(id: string): void {
+    const dialogRef = this.dialog.open(DeletionConfirmationComponent);
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if (dialogResult) {
+        this.techniqueMitigationService.deleteTechnique(id)
+      .pipe(takeUntil(this.destroy))
+      .subscribe({
+        next: () => {
+          this.alertService.success("Загрозу видалено",true,true);
+          this.getTechniquePage(this.currentPage, this.pageSize);
+        },
+        error: error => {
+          this.displayError("Виникла помилка");
+        }
+      });
       }
+    });
   }
 
-  onDeviceSelected(event: MatAutocompleteSelectedEvent): void {
-    this.selectedDeviceId = event.option.value.id;
+  sortData(sortOrder: string) : void {
+    sortOrder === 'desc' ? this.sortOrder = 'desc' : this.sortOrder = 'asc';
+    this.getTechniquesBySearch();
   }
 
-  displayDevice(device: Device): string {
-    return device ? device.name : '';
+
+  paginationHandler(pageEvent: PageEvent): void {
+      this.getTechniquePage(pageEvent.pageIndex, pageEvent.pageSize);
   }
 
   openTechniqueDialog(id: string): void {
@@ -158,44 +147,55 @@ export class ModelGenerationComponent {
         .pipe(takeUntil(this.destroy))
         .subscribe({
           next: response => {
-            const dialogRef = this.dialog.open(ViewTechniqueMitigationComponent, {
-              data: {techniqueMitigation: response}
+            const dialogRef = this.dialog.open(TechniqueInfoComponent, {
+              data: {technique: response}
             });
           },
           error: error => {
             switch(error.status){
               case 404:
-                this.alertService.error(error.error.message, false, false, "error-dialog");
+                this.alertService.error("Загрозу не знайдено", false, false, "error-dialog");
                 break;
               default:
-                this.alertService.error("несподівана помилка, спробуйте пізніше", false, false, "error-dialog");
+                this.alertService.error("Несподівана помилка, спробуйте пізніше", false, false, "error-dialog");
                 break;
             }
             this.alertService.error(this.alertMessage);
           }});
   }
 
-  openMitigationDialog(id: string): void {
-    this.techniqueMitigationService.getMitigationById(id)
-        .pipe(takeUntil(this.destroy))
-        .subscribe({
-          next: response => {
-            const dialogRef = this.dialog.open(ViewTechniqueMitigationComponent, {
-              data: {techniqueMitigation: response}
-            });
-          },
-          error: error => {
-            switch(error.status){
-              case 404:
-                this.alertService.error(error.error.message, false, false, "error-dialog");
-                break;
-              default:
-                this.alertService.error("несподівана помилка, спробуйте пізніше", false, false, "error-dialog");
-                break;
-            }
-            this.alertService.error(this.alertMessage);
-          }});
-  }
+  // createDevice() {
+  //   const dialogConfig = new MatDialogConfig();
+  //   dialogConfig.disableClose = true;
+  //   dialogConfig.autoFocus = true;
+
+  //   const dialogRef = this.dialog.open(DeviceCreationComponent, dialogConfig);
+  //   dialogRef.afterClosed().pipe(takeUntil(this.destroy)).subscribe(() => {
+  //     this.getDevicePage(this.currentPage, this.pageSize);
+  //   })
+  // }
+
+  // editDevice(device: Device){
+  //   const dialogConfig = new MatDialogConfig();
+  //   dialogConfig.disableClose = true;
+  //   dialogConfig.autoFocus = true;
+  //   let dataDialog = Object.assign({}, device);
+  //   dialogConfig.data = {
+  //     device: dataDialog
+  //   };
+  //   const dialogRef = this.dialog.open(DeviceEditComponent, dialogConfig);
+  //   dialogRef.afterClosed().pipe(takeUntil(this.destroy)).subscribe((data: Device) => {
+  //     if(data){
+  //       device.name = data.name;
+  //       device.os = data.os;
+  //       device.osMinVersion = data.osMinVersion;
+  //       device.osMaxVersion = data.osMaxVersion;
+  //       device.chipset = data.chipset;
+  //       device.fingerprintScanner = data.fingerprintScanner;
+  //       device.faceRecognition = data.faceRecognition;
+  //     }
+  //   })
+  // }
 
 
   //------------------------------------------------------
@@ -221,7 +221,7 @@ export class ModelGenerationComponent {
       .pipe(takeUntil(this.destroy))
       .subscribe({
         next: response => {
-          this.pageContent = response;
+          this.pageContentOld = response;
           this.currentPage = 0;
         },
         error: error => {
@@ -235,7 +235,7 @@ export class ModelGenerationComponent {
       .pipe(takeUntil(this.destroy))
       .subscribe({
         next: response => {
-          this.pageContent = response;
+          this.pageContentOld = response;
           this.currentPage = pageIndex;
           this.pageSize = pageSize;
         },
@@ -250,7 +250,7 @@ export class ModelGenerationComponent {
       .pipe(takeUntil(this.destroy))
       .subscribe({
         next: response => {
-          this.pageContent = response;
+          this.pageContentOld = response;
           this.currentPage = pageIndex;
           this.pageSize = pageSize;
         },
@@ -265,7 +265,7 @@ export class ModelGenerationComponent {
       .pipe(takeUntil(this.destroy))
       .subscribe({
         next: response => {
-          this.pageContent = response;
+          this.pageContentOld = response;
           this.currentPage = pageIndex;
           this.pageSize = pageSize;
         },
@@ -273,19 +273,6 @@ export class ModelGenerationComponent {
           this.displayError(error);
         }
       });
-  }
-
-
-  paginationHandler(pageEvent: PageEvent): void {
-    if (this.isFilteredByStock) {
-      this.getStockDishPage(pageEvent.pageIndex, pageEvent.pageSize);
-    }
-    else if (this.isFilteredByFavorite) {
-      this.getFavoriteDishPage(pageEvent.pageIndex, pageEvent.pageSize);
-    }
-    else {
-      this.getDishPage(pageEvent.pageIndex, pageEvent.pageSize);
-    }
   }
 
   getCategories() {
@@ -415,11 +402,6 @@ export class ModelGenerationComponent {
           this.displayError(error);
         }
       });
-  }
-
-  sortData(sortOrder: string) : void {
-    sortOrder === 'desc' ? this.sortOrder = 'desc' : this.sortOrder = 'asc';
-    this.getBySearch();
   }
 
   displayError(error: any) : void {

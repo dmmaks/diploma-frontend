@@ -1,4 +1,4 @@
-export interface SearchDeviceParams {
+export interface StandardSearchParams {
     name: string;
     order: string;
   }

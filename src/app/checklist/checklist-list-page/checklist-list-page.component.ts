@@ -17,7 +17,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { ViewTechniqueMitigationComponent } from '../view-technique-mitigation/view-technique-mitigation.component';
 import { Sort, SortDirection } from '@angular/material/sort';
 import { ModelGenerationDeviceFilter } from 'src/app/_models/_filters/model-generation-device-filter';
-import { SearchDeviceParams } from 'src/app/_models/search-device-params';
+import { StandardSearchParams } from 'src/app/_models/standard-search-params';
 import { DeviceService } from 'src/app/_services/device.service';
 import { GeneratedModel } from 'src/app/_models/generated-model';
 import { Device } from 'src/app/_models/device';

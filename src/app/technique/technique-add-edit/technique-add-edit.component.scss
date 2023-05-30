@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;300&display=swap');
+@import '../layout/layout.component.scss';
+
+  .mat-table{
+    overflow-y: auto;
+    max-height: 400px;
+    margin-bottom: 15px;
+  }
+
+@include mat-table-columns(( 
+      name: (width: 65%),
+      actions: (width: 35%),
+  ));
+
+form button{
+margin-left: 5px;
+  }

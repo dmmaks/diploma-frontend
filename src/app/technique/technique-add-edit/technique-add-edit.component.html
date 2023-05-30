@@ -1,0 +1,102 @@
+<mat-card *ngIf="technique" fxFlex="40%" fxFlex.xs="95%">
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
+      <h2>{{title}}</h2>
+      <alert id="form"></alert>
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="Name" formControlName="name" [(ngModel)]="technique.name">
+        <mat-error>
+          Будь ласка, введіть назву правильно
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <textarea matInput rows="5" placeholder="Опис" formControlName="description"
+          [(ngModel)]="technique.description"></textarea>
+        <mat-error>
+          Будь ласка, введіть опис правильно
+        </mat-error>
+      </mat-form-field>
+
+      <div class="table-container">
+        <mat-table id="table" [dataSource]="technique.links" #table class="mat-cell">
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Назва</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>
+              <button type="button" mat-icon-button color="primary" (click)="addLink()">
+                <mat-icon aria-label="Додати">add</mat-icon>
+              </button>
+            </mat-header-cell>
+
+            <mat-cell *matCellDef="let row; let i=index;">
+              <button type="button" mat-flat-button color="warn" (click)="removeLink(row.id)">Remove</button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+        </mat-table>
+        <div *ngIf="!technique.links.length">
+          Пом'якшень не додано
+        </div>
+      </div>
+
+      <mat-form-field class="full-width-input">
+        <mat-label>ОС</mat-label>
+        <mat-select formControlName="os" [(ngModel)]="applicability.os">
+          <mat-option *ngFor="let os of devicePredefinedValues.operatingSystems; let i=index"
+            value="{{os}}">{{os}}</mat-option>
+        </mat-select>
+        <mat-error>Необхідно зробити вибір</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Початкова версія ОС" formControlName="osMinVersion"
+          [(ngModel)]="applicability.osMinVersion">
+        <mat-error>
+          Будь ласка, введіть початкову версію ОС
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Кінцева версія ОС" formControlName="osMaxVersion"
+          [(ngModel)]="applicability.osMaxVersion">
+        <mat-error>
+          Будь ласка, введіть кінцеву версію ОС
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Процесор" formControlName="chipset" [(ngModel)]="applicability.chipset">
+        <mat-error>
+          Будь ласка, введіть процесор
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Тип сканера відбитків</mat-label>
+        <mat-select formControlName="fingerprintScanner" [(ngModel)]="applicability.fingerprintScanner">
+          <mat-option *ngFor="let fingerprintScanner of devicePredefinedValues.fingerprintSensorTypes; let i=index"
+            value="{{fingerprintScanner}}">{{fingerprintScanner}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Тип сканування обличчя</mat-label>
+        <mat-select formControlName="faceRecognition" [(ngModel)]="applicability.faceRecognition">
+          <mat-option *ngFor="let faceRecognition of devicePredefinedValues.faceRecognitionTypes; let i=index"
+            value="{{faceRecognition}}">{{faceRecognition}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button type="submit" mat-raised-button color="primary"> {{modeEdit ? "Підтвердити" : "Додати"}} </button>
+      <button type="button" mat-raised-button class="cancel-button" routerLink="/techniques">Скасувати</button>
+
+    </form>
+  </mat-card-content>
+</mat-card>

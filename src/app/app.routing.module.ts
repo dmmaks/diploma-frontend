@@ -15,6 +15,7 @@ const dishModule = () => import('./dish/dish.module').then(x => x.DishModule);
 const modelGenerationModule = () => import('./model-generation/model-generation.module').then(x => x.ModelGenerationModule);
 const checklistModule = () => import('./checklist/checklist.module').then(x => x.ChecklistModule);
 const deviceModule = () => import('./device/device.module').then(x => x.DeviceModule);
+const techniqueModule = () => import('./technique/technique.module').then(x => x.TechniqueModule);
 
 const routes: Routes = [
   { path: '', redirectTo: '/account/signin', pathMatch: 'full' },
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'model-generation', loadChildren: modelGenerationModule, canActivate: [AuthGuard], data: { roles: [Role.Admin, Role.User, Role.Moderator] } },
   { path: 'checklists', loadChildren: checklistModule, canActivate: [AuthGuard], data: { roles: [Role.Admin, Role.User, Role.Moderator] } },
   { path: 'devices', loadChildren: deviceModule, canActivate: [AuthGuard], data: { roles: [Role.Moderator] } },
+  { path: 'techniques', loadChildren: techniqueModule, canActivate: [AuthGuard], data: { roles: [Role.Moderator] } },
   { path: '**', redirectTo: '/account/signin', pathMatch: 'full' }
 ];
 

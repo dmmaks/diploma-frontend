@@ -21,13 +21,13 @@ import { Checklist } from 'src/app/_models/checklist';
 import { ChecklistService } from 'src/app/_services/checklist.service';
 import { DeletionConfirmationComponent } from '../deletion-confirmation/deletion-confirmation.component';
 import { Device } from 'src/app/_models/device';
-import { SearchDeviceParams } from 'src/app/_models/search-device-params';
+import { StandardSearchParams } from 'src/app/_models/standard-search-params';
 import { DeviceCreationComponent } from '../device-creation/device-creation.component';
 import { DeviceEditComponent } from '../device-edit/device-edit.component';
 
 
 @Component({
-  selector: 'device-list-page.component',
+  selector: 'device-list-page',
   templateUrl: './device-list-page.component.html',
   styleUrls: ['./device-list-page.component.scss']
 })
@@ -83,7 +83,7 @@ export class DeviceListPageComponent {
 
 
   getDevicesBySearch(): void {
-    const filter: SearchDeviceParams = this.searchForm.value;
+    const filter: StandardSearchParams = this.searchForm.value;
     filter.order = this.sortOrder;
     this.deviceService.getDevicesBySearch(this.searchForm.value, this.pageSize)
       .pipe(takeUntil(this.destroy))
