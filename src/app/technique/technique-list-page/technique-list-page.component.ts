@@ -164,39 +164,6 @@ export class TechniqueListPageComponent {
           }});
   }
 
-  // createDevice() {
-  //   const dialogConfig = new MatDialogConfig();
-  //   dialogConfig.disableClose = true;
-  //   dialogConfig.autoFocus = true;
-
-  //   const dialogRef = this.dialog.open(DeviceCreationComponent, dialogConfig);
-  //   dialogRef.afterClosed().pipe(takeUntil(this.destroy)).subscribe(() => {
-  //     this.getDevicePage(this.currentPage, this.pageSize);
-  //   })
-  // }
-
-  // editDevice(device: Device){
-  //   const dialogConfig = new MatDialogConfig();
-  //   dialogConfig.disableClose = true;
-  //   dialogConfig.autoFocus = true;
-  //   let dataDialog = Object.assign({}, device);
-  //   dialogConfig.data = {
-  //     device: dataDialog
-  //   };
-  //   const dialogRef = this.dialog.open(DeviceEditComponent, dialogConfig);
-  //   dialogRef.afterClosed().pipe(takeUntil(this.destroy)).subscribe((data: Device) => {
-  //     if(data){
-  //       device.name = data.name;
-  //       device.os = data.os;
-  //       device.osMinVersion = data.osMinVersion;
-  //       device.osMaxVersion = data.osMaxVersion;
-  //       device.chipset = data.chipset;
-  //       device.fingerprintScanner = data.fingerprintScanner;
-  //       device.faceRecognition = data.faceRecognition;
-  //     }
-  //   })
-  // }
-
 
   //------------------------------------------------------
 

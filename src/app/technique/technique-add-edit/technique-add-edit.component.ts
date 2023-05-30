@@ -110,26 +110,28 @@ export class TechniqueAddEditComponent implements OnInit {
   }
 
   onSubmitForm(): void {
-    //   this.alertService.clear();
-    //   if(this.form.valid){
-    //     if(!this.modeEdit){
-    //     this.dishService.createDish(this.dishModel).pipe(takeUntil(this.destroy)).subscribe({
-    //       next: () => {
-    //         this.alertService.success("Dish successfully added!", true, true);
-    //         this.router.navigate(['../'], { relativeTo: this.activatedRoute });
-    //       },
-    //       error: () => this.alertService.error("There was a server error. Please try again later.", false, false, "formDish")
-    //     });
-    //     }
-    //   else {
-    //     this.dishService.editDish(this.dishModel).pipe(takeUntil(this.destroy)).subscribe({
-    //       next: () => {
-    //         this.alertService.success("Dish successfully updated!", true, true);
-    //         this.router.navigateByUrl("/dishes");
-    //       },
-    //       error: () => this.alertService.error("There was a server error. Please try again later.", false, false, "formDish")
-    //     });
-    //   }
-    // }
+      this.alertService.clear();
+      console.log(this.form.value);
+      if(this.form.valid){
+        if(!this.modeEdit){
+
+        this.techniqueMitigationService.createTechnique({techniqueWithLinks: this.technique, applicability: this.applicability}).pipe(takeUntil(this.destroy)).subscribe({
+          next: () => {
+            this.alertService.success("Загрозу додано.", true, true);
+            this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+          },
+          error: () => this.alertService.error("Сталася серверна помилка.", false, false)
+        });
+        }
+      else {
+        // this.dishService.editDish(this.dishModel).pipe(takeUntil(this.destroy)).subscribe({
+        //   next: () => {
+        //     this.alertService.success("Dish successfully updated!", true, true);
+        //     this.router.navigateByUrl("/dishes");
+        //   },
+        //   error: () => this.alertService.error("There was a server error. Please try again later.", false, false)
+        // });
+      }
+    }
   }
 }

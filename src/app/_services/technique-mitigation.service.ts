@@ -8,6 +8,7 @@ import { StandardSearchParams } from '../_models/standard-search-params';
 import { Page } from '../_models';
 import { TechniqueMitigationWithLinks } from '../_models/technique-mitigation-with-links';
 import { Applicability } from '../_models/applicability';
+import { TechniqueApplicabilityWithLinks } from '../_models/technique-applicability-with-links';
 
 const baseUrl = `${environment.serverUrl}/techniquesMitigations`;
 
@@ -76,4 +77,7 @@ export class TechniqueMitigationService {
     return this.http.delete(`${baseUrl}/techniques/${id}`);
   }
 
+  createTechnique(dto: TechniqueApplicabilityWithLinks): Observable<Object> {
+    return this.http.post(`${baseUrl}/techniques`, dto);
+  }
 }
