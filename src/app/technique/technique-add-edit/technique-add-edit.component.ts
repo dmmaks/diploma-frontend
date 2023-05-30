@@ -56,7 +56,7 @@ export class TechniqueAddEditComponent implements OnInit {
         error: () => this.router.navigate(['/techniques'])
       });
       this.techniqueMitigationService.getApplicabilityByTechniqueId(id).pipe(takeUntil(this.destroy)).subscribe({
-        next: (data: Applicability) => { 
+        next: (data: Applicability) => {
           this.applicability = data;
           this.form.addControl('os', new FormControl(this.applicability.os, [Validators.required, Validators.maxLength(40)]));
           this.form.addControl('osMinVersion', new FormControl(this.applicability.osMinVersion, [Validators.maxLength(10)]));
@@ -110,19 +110,19 @@ export class TechniqueAddEditComponent implements OnInit {
   }
 
   onSubmitForm(): void {
-      this.alertService.clear();
-      console.log(this.form.value);
-      if(this.form.valid){
-        if(!this.modeEdit){
-
-        this.techniqueMitigationService.createTechnique({techniqueWithLinks: this.technique, applicability: this.applicability}).pipe(takeUntil(this.destroy)).subscribe({
+    this.alertService.clear();
+    if (this.form.valid) {
+      if (!this.modeEdit) {
+        this.applicability = { os: this.form.value.os, osMinVersion: this.form.value.osMinVersion, osMaxVersion: this.form.value.osMaxVersion, 
+          chipset: this.form.value.chipset, fingerprintScanner: this.form.value.fingerprintScanner, faceRecognition: this.form.value.faceRecognition }
+        this.techniqueMitigationService.createTechnique({ techniqueWithLinks: this.technique, applicability: this.applicability }).pipe(takeUntil(this.destroy)).subscribe({
           next: () => {
             this.alertService.success("Загрозу додано.", true, true);
             this.router.navigate(['../'], { relativeTo: this.activatedRoute });
           },
           error: () => this.alertService.error("Сталася серверна помилка.", false, false)
         });
-        }
+      }
       else {
         // this.dishService.editDish(this.dishModel).pipe(takeUntil(this.destroy)).subscribe({
         //   next: () => {
