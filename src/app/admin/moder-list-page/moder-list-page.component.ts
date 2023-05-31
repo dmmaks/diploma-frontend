@@ -112,6 +112,7 @@ export class ModerListPageComponent {
         account.lastName = data.lastName;
         account.birthDate = data. birthDate;
         account.gender = data.gender;
+        account.imgUrl = data.imgUrl;
       }
     })
   }

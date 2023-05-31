@@ -35,6 +35,7 @@ export class EditModerComponent implements OnInit, OnDestroy {
         this.profile = data;
     this.form = this.formBuilder.group({
       id: [this.data.id],
+      imgUrl: [this.profile.imgUrl, [Validators.required, Validators.pattern('[^\s]+(.*?)\.(jpg|jpeg|png|JPG|JPEG|PNG)$')]],
       firstName: [this.profile.firstName, [Validators.required, Validators.pattern('^([A-Z a-z]){3,35}$')]],
       lastName: [this.profile.lastName, [Validators.required, Validators.pattern('^([A-Z a-z]){3,35}$')]],
       birthDate: [this.profile.birthDate, Validators.required],

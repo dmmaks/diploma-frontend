@@ -3,4 +3,5 @@ export interface Profile{
     lastName: string;
     birthDate: string;
     gender: string;
+    imgUrl: string;
 }

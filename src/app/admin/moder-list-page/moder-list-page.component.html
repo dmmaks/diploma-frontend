@@ -43,6 +43,11 @@
       <mat-cell class="content-text" *matCellDef="let item" >{{item.id}}</mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="image">
+      <mat-header-cell *matHeaderCellDef>Зображення</mat-header-cell>
+      <mat-cell *matCellDef="let item"><img [src]="item.imgUrl"/></mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="firstName">
       <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
       <mat-cell class="content-text" *matCellDef="let item">{{item.firstName}}</mat-cell>
