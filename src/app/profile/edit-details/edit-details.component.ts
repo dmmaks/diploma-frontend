@@ -101,6 +101,7 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.alertService.success('Дані змінено.',true,true);
+          this.router.navigateByUrl("/profile");
         },
         error: error => {
           switch (error.status) {

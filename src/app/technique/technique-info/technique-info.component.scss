@@ -69,3 +69,18 @@
   td.mat-cell:last-of-type {
     padding-right: 5px;
   }
+
+  .technique-info-field {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+    font-size: 20px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    color: gray;
+    font-weight: 500;
+  }
+
+  .applicability-fields {
+    text-align: center;
+  }

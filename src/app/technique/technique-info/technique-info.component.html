@@ -1,37 +1,42 @@
 <div fxFlex="800px" fxFlex.xs="320px"><button mat-icon-button class="close-button" [mat-dialog-close]="true">
   <mat-icon class="close-icon" color="accent">close</mat-icon>
 </button>
+<br>
+<br>
 <div mat-dialog-content>
     <h1><b>{{technique.name}}</b></h1>
     <p>{{technique.description}}</p>
 </div>
 <br>
-<div *ngIf="applicability">
-  <table class="mat-table">
-    <tr class="mat-row">
-      <td class="mat-cell">ОС:</td>
-      <td class="mat-cell">{{applicability.os}}</td>
-    </tr>
-    <tr class="mat-row">
-      <td class="mat-cell">Мінімальна версія ОС:</td>
-      <td class="mat-cell">{{applicability.osMinVersion}}</td>
-    </tr>
-    <tr class="mat-row">
-      <td class="mat-cell">Максимальна версія ОС:</td>
-      <td class="mat-cell">{{applicability.osMaxVersion}}</td>
-    </tr>
-    <tr class="mat-row">
-      <td class="mat-cell">Процесор:</td>
-      <td class="mat-cell">{{applicability.chipset}}</td>
-    </tr>
-    <tr class="mat-row">
-      <td class="mat-cell">Сканер відбитків:</td>
-      <td class="mat-cell">{{applicability.fingerprintScanner}}</td>
-    </tr>
-    <tr class="mat-row">
-      <td class="mat-cell">Розпізнавання обличчя:</td>
-      <td class="mat-cell">{{applicability.faceRecognition}}</td>
-    </tr>
-  </table>
+<div *ngIf="applicability" class="applicability-fields">
+  <div class="technique-info-field">
+    <label>ОС:</label>
+    {{applicability.os}}
+  </div>
+
+  <div class="technique-info-field">
+    <label>Мінімальна версія ОС:</label>
+    {{applicability.osMinVersion}}
+  </div>
+
+  <div class="technique-info-field">
+    <label>Максимальна версія ОС:</label>
+    {{applicability.osMaxVersion}}
+  </div>
+
+  <div class="technique-info-field">
+    <label>Процесор:</label>
+    {{applicability.chipset}}
+  </div>
+
+  <div class="technique-info-field">
+    <label>Сканер відбитків:</label>
+    {{applicability.fingerprintScanner}}
+  </div>
+
+  <div class="technique-info-field">
+    <label>Розпізнавання обличчя:</label>
+    {{applicability.faceRecognition}}
+  </div>
 </div>
 </div>

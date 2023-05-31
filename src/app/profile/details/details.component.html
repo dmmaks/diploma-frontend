@@ -5,28 +5,28 @@
     </div>
 
     <div class="profile-info-field">
-      <label>First name:</label>
+      <label>Ім'я:</label>
       {{profileData.firstName}}
     </div>
 
     <div class="profile-info-field">
-      <label>Last name:</label>
+      <label>Прізвище:</label>
       {{profileData.lastName}}
     </div>
 
     <div class="profile-info-field">
-      <label>Birth date:</label>
+      <label>Дата народження:</label>
       {{profileData.birthDate}}
     </div>
 
     <div class="profile-info-field">
-      <label>Gender:</label>
+      <label>Стать:</label>
       <span> {{profileData.gender}}</span>
     </div>
 
     <div class="user_profile_control">
-      <button class="user_profile_control_edit" type="button" mat-raised-button color="primary" (click)="edit()">Edit</button>
-      <button type="button" mat-raised-button color="primary" (click)="changePassword()">Change password</button>
+      <button class="user_profile_control_edit" type="button" mat-raised-button color="primary" (click)="edit()">Редагувати профіль</button>
+      <button class="user_profile_control_change_password" type="button" mat-raised-button color="primary" (click)="changePassword()">Змінити пароль</button>
     </div>
 
   </div>
