@@ -20,7 +20,7 @@
       <mat-form-field>
         <input matInput  placeholder="First Name" value="profile.firstName" formControlName="firstName" required >
         <mat-error>
-          Please enter your first name correctly
+          Вкажіть коректне ім'я
         </mat-error>
       </mat-form-field>
     </div>
@@ -29,7 +29,7 @@
       <mat-form-field>
         <input matInput placeholder="Last Name"  value="profile.lastName"  formControlName="lastName" required >
         <mat-error>
-          Please enter your last name correctly
+          Вкажіть коректне прізвище
         </mat-error>
       </mat-form-field>
     </div>
@@ -40,34 +40,25 @@
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
         <mat-error>
-          Please provide a valid birthdate
+          Вкажіть коректну дату народження
         </mat-error>
       </mat-form-field>
     </div>
 
     <div class="form">
       <mat-form-field>
-        <mat-label>Gender</mat-label>
+        <mat-label>Стать</mat-label>
         <mat-select formControlName="gender" value="profile.gender">
-          <mat-option value="M">Male</mat-option>
-          <mat-option value="F">Female</mat-option>
+          <mat-option value="M">Чоловіча</mat-option>
+          <mat-option value="F">Жіноча</mat-option>
         </mat-select>
-        <mat-error>You must make a selection</mat-error>
-      </mat-form-field>
-    </div>
-
-    <div class="form">
-      <mat-form-field>
-        <input matInput placeholder="Image url"  formControlName="imgUrl" value="profile.imgUrl">
-        <mat-error>
-          Entered link has incorrect format. Set only .jpeg|.jpg|.png images.
-        </mat-error>
+        <mat-error>Необхідно зробити вибір</mat-error>
       </mat-form-field>
     </div>
 
     <mat-dialog-actions>
-      <button class="mat-raised-button" (click)="close()">Close</button>
-      <button class="mat-raised-button mat-primary" [disabled]="!form.valid" (click)="editModerator()">Save</button>
+      <button class="mat-raised-button" (click)="close()">Закрити</button>
+      <button class="mat-raised-button mat-primary" [disabled]="!form.valid" (click)="editModerator()">Зберегти</button>
     </mat-dialog-actions>
   </form>
 </div>

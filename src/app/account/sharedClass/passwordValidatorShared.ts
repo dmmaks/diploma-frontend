@@ -9,15 +9,15 @@ export class PasswordValidatorShared {
 
   get passwordErrorMessage(): string {
     return this.control['password'].hasError('required') ?
-      'Enter your password, please' :
+      'Введіть, будь ласка, пароль' :
       this.control['password'].hasError('pattern') ?
-        'The password contains at least 8 symbol, one uppercase letter, a lowercase letter, and a number' : '';
+        'TПароль має містити щонайменше 8 символів, одну велику літеру, одну малу літеру та цифру' : '';
   }
 
   get confirmPasswordErrorMessage(): string {
     return this.control['confirmPassword'].hasError('required') ?
-      'Enter your password, please' :
+      'Введіть, будь ласка, пароль' :
       this.control['confirmPassword'].hasError('mustMatch') ?
-        'Passwords do not match' : '';
+        'Паролі не збігаються' : '';
   }
 }

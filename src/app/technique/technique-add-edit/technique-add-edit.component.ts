@@ -131,7 +131,7 @@ export class TechniqueAddEditComponent implements OnInit {
             this.alertService.success("Загрозу оновлено.", true, true);
             this.router.navigateByUrl("/techniques");
           },
-          error: () => this.alertService.error("There was a server error. Please try again later.", false, false)
+          error: () => this.alertService.error("Сталася серверна помилка.", false, false)
         });
       }
     }

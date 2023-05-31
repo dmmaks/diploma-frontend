@@ -29,8 +29,8 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
   destroy: ReplaySubject<any> = new ReplaySubject<any>();
   alertMessage: string;
   form = new FormGroup({
-    firstName: new FormControl('', [Validators.pattern('^([A-Z a-z]){3,35}$')]),
-    lastName: new FormControl('', [Validators.pattern('^([A-Z a-z]){3,35}$')]),
+    firstName: new FormControl('', [Validators.pattern('^([A-Z a-z]){2,35}$')]),
+    lastName: new FormControl('', [Validators.pattern('^([A-Z a-z]){2,35}$')]),
     date: new FormControl(''),
     gender: new FormControl(''),
     imgUrl: new FormControl('')
@@ -57,7 +57,7 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
           this.hide = true;
           return;
         }
-        this.alertService.error('Uncorrected file format',true,true);
+        this.alertService.error('Некоректний формат файлу',true,true);
       }
     });
   }
@@ -100,18 +100,15 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy))
       .subscribe({
         next: () => {
-          this.alertService.success('Data changed',true,true);
+          this.alertService.success('Дані змінено.',true,true);
         },
         error: error => {
           switch (error.status) {
             case 400:
-              this.alertMessage = "Something went wrong";
-              break;
-            case 409:
-              this.alertMessage = error.error.message;
+              this.alertMessage = "Щось пішло не так.";
               break;
             default:
-              this.alertMessage = "There was an error on the server, please try again later."
+              this.alertMessage = "Трапилася помилка."
               break;
           }
           this.alertService.error(this.alertMessage,true,true);
@@ -126,16 +123,16 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
 
   get firstNameErrorMessage(): string {
     return this.form.controls['firstName'].hasError('required') ?
-      'Please provide a valid name' :
+      'Вкажіть коректне ім\'я' :
       this.form.controls['firstName'].hasError('pattern') ?
-        'The name must contain only letters. Min length 3 characters' : '';
+        'Ім\'я має містити лише літери та щонайменше два символи.' : '';
   }
 
   get lastNameErrorMessage(): string {
     return this.form.controls['lastName'].hasError('required') ?
-      'Please provide a valid lastname' :
+      'Вкажіть коректне прізвище' :
       this.form.controls['lastName'].hasError('pattern') ?
-        'The lastname must contain only letters. Min length 3 characters' : '';
+        'Прізвище має містити лише літери та щонайменше два символи.' : '';
   }
 
   back(): void {

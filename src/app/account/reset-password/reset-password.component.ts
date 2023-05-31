@@ -71,7 +71,7 @@ onSubmit(): void {
       .pipe(takeUntil(this.destroy))
       .subscribe({
         next: ()  => {
-          this.alertService.success('Password reset successful, you can now login', true);
+          this.alertService.success('Пароль успішно змінено, ви можете увійти.', true);
           this.router.navigate(['../../signin'], { relativeTo: this.route });
         },
         error: error => {
@@ -82,7 +82,7 @@ onSubmit(): void {
               });
               break;
             default:
-              this.alertMessage = "There was an error on the server, please try again later."
+              this.alertMessage = "На сервері трапилася помилка, спробуйте пізніше."
               break;
           }
           this.alertService.error(this.alertMessage);

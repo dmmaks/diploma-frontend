@@ -142,13 +142,13 @@ export class TechniqueListPageComponent {
   displayError(error: any) : void {
     switch (error.status) {
       case 400:
-        this.alertMessage = "Something went wrong";
+        this.alertMessage = "Щось пішло не так.";
         break;
       case 404:
-        this.alertMessage = error.error.message;
+        this.alertMessage = "Загрозу не знайдено.";
         break;
       default:
-        this.alertMessage = "There was an error on the server, please try again later."
+        this.alertMessage = "Трапилася серверна помилка, спробуйте пізніше."
         break;
     }
     this.alertService.error(this.alertMessage,true,true);

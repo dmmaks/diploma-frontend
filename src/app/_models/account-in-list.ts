@@ -3,7 +3,6 @@ export interface AccountInList {
   email: string;
   firstName?: string;
   lastName?: string;
-  imgUrl?: string;
   birthDate?: string;
   gender?: string;
   status?: boolean;

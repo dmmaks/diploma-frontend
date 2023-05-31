@@ -37,17 +37,17 @@ onSubmit(): void {
     this.authService.forgotPassword(this.control['email'].value)
             .pipe(takeUntil(this.destroy))
             .subscribe({
-                next: () => this.alertService.success("A letter with instructions has been sent to your email."),
+                next: () => this.alertService.success("Лист з інструкціями було надіслано на вашу пошту.."),
                 error: error => {
                   switch(error.status){
                     case 400:
-                      this.alertMessage = "Email format is invalid";
+                      this.alertMessage = "Формат пошти некоректний.";
                       break;
                     case 404:
-                      this.alertMessage = `Account ${this.control['email'].value} not found.`;
+                      this.alertMessage = `Обліковий запис ${this.control['email'].value} не знайдено.`;
                       break;
                       default:
-                        this.alertMessage = "There was an error on the server, please try again later."
+                        this.alertMessage = "На сервері трапилася помилка, спробуйте пізніше."
                         break;
                   }                  
                 this.alertService.error(this.alertMessage);}

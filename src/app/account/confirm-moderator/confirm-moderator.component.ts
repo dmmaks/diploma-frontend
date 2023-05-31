@@ -71,7 +71,7 @@ export class ConfirmModeratorComponent extends PasswordValidatorShared implement
         .pipe(takeUntil(this.destroy))
         .subscribe({
           next: ()  => {
-            this.alertService.success('Password creation successful, you can now login', true);
+            this.alertService.success('Пароль успішно створено, тепер можна увійти.', true);
             this.router.navigate(['../../signin'], { relativeTo: this.route });
           },
           error: error => {
@@ -85,7 +85,7 @@ export class ConfirmModeratorComponent extends PasswordValidatorShared implement
                 break;
 
               default:
-                this.alertMessage = "There was an error on the server, please try again later.";
+                this.alertMessage = "На сервері відбулася помилка, будь ласка, спробуйте пізніше.";
                 break;
             }
             this.alertService.error(this.alertMessage);

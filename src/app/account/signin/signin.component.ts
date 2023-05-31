@@ -57,18 +57,18 @@ onSubmit() {
                 error: error => {
                   switch(error.status){
                     case 400:
-                      this.alertMessage = "Email format is invalid";
+                      this.alertMessage = "Некоректний формат електронної пошти.";
                       break;
                       case 401:
-                        this.alertMessage = "Invalid username/password supplied";
+                        this.alertMessage = "Облікові дані некоректні.";
                         break;
                       case 422:
-                        this.alertMessage = "Prove you're not a robot";
+                        this.alertMessage = "Підтвердьте що ви не робот.";
                         this.isCaptcha = true;
                         this.form.controls['recaptcha'].addValidators(Validators.required);
                         break;
                       default:
-                        this.alertMessage = "There was an error on the server, please try again later."
+                        this.alertMessage = "На сервері трапилася помилка, спробуйте пізніше.."
                         break;
                   }
                 this.alertService.error(this.alertMessage);}

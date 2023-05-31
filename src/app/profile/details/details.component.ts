@@ -24,7 +24,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
       .subscribe((data: Profile) => {
         this.profileData = data;
         this.profileData.gender = this.profileData.gender === "F" ? "Female" : "Male";
-        this.url = this.profileData.imgUrl;
+        this.url = '../assets/images/defaultAv.png';
       });
   }
 

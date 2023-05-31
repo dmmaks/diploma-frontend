@@ -7,30 +7,30 @@
     </mat-form-field>
 
     <mat-form-field class="full-width-input">
-      <mat-select placeholder="Sorting" formControlName="order">
-        <mat-option value="" disabled selected>Sorting</mat-option>
-        <mat-option value="asc">Sort by name (A-Z)</mat-option>
-        <mat-option value="desc">Sort by name (Z-A)</mat-option>
+      <mat-select placeholder="Сортування" formControlName="order">
+        <mat-option value="" disabled selected>Сортування</mat-option>
+        <mat-option value="asc">Сортувати за ім'ям (А-Я)</mat-option>
+        <mat-option value="desc">Сортувати за ім'ям (Я-А)</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field class="full-width-input">
-      <mat-select placeholder="Gender" formControlName="gender">
-        <mat-option value="">Gender</mat-option>
-        <mat-option value="M">Male</mat-option>
-        <mat-option value="F">Female</mat-option>
+      <mat-select placeholder="Стать" formControlName="gender">
+        <mat-option value="">Стать</mat-option>
+        <mat-option value="M">Чоловіча</mat-option>
+        <mat-option value="F">Жіноча</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field class="full-width-input">
-      <mat-select placeholder="Account status" formControlName="status">
-        <mat-option value="">Account status</mat-option>
-        <mat-option value="true">Active</mat-option>
-        <mat-option value="false">Inactive</mat-option>
+      <mat-select placeholder="Статус облікового запису" formControlName="status">
+        <mat-option value="">Статус облікового запису</mat-option>
+        <mat-option value="true">Активний</mat-option>
+        <mat-option value="false">Неактивний</mat-option>
       </mat-select>
     </mat-form-field>
 
-    <button type="submit" class="btn-filter" mat-flat-button color="warn">Apply Filter</button>
+    <button type="submit" class="btn-filter" mat-flat-button color="warn">Фільтрувати</button>
   </form>
 </div>
 
@@ -41,11 +41,6 @@
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
       <mat-cell class="content-text" *matCellDef="let item" >{{item.id}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="image">
-      <mat-header-cell *matHeaderCellDef>Image</mat-header-cell>
-      <mat-cell *matCellDef="let item"><img [src]="item.imgUrl"/></mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="firstName">

@@ -26,7 +26,7 @@ constructor(
 ){
   super();
   this.form = this.formBuilder.group({
-    firstName: [null, [Validators.required, Validators.pattern('^([A-Z a-z]){3,35}$')]],
+    firstName: [null, [Validators.required, Validators.pattern('^([A-Z a-z]){2,35}$')]],
     lastName: [null, [Validators.required, Validators.pattern('^([A-Z a-z]){3,35}$')]],
     birthDate: ['', Validators.required],
     email: ['', Validators.email],
@@ -45,9 +45,9 @@ constructor(
 
 get firstNameErrorMessage(): string {
   return this.control['firstName'].hasError('required') ?
-    'Please provide a valid name' :
+    'Вкажіть ім\'я' :
     this.control['firstName'].hasError('pattern') ?
-    'The name must contain only letters. Min length 3 characters' : '';
+    'Ім\'я мусить містити лише літери та щонайменше два символи' : '';
 }
 
 onSubmit(): void {
@@ -58,22 +58,19 @@ onSubmit(): void {
             .pipe(takeUntil(this.destroy))
             .subscribe({
               next: () => {
-                this.alertService.success('Registration successful', true);
+                this.alertService.success('Реєстрація успішна.', true);
                 this.router.navigate(['../signin'], { relativeTo: this.route });
               },
                 error: error => {
                   switch(error.status){
                     case 400:
-                      this.alertMessage = "Somethig went wrong";
-                      break;
-                    case 409:
-                      this.alertMessage = error.error.message;
+                      this.alertMessage = "Щось пішло не так.";
                       break;
                     case 422:
-                    this.alertMessage = "Email already exists";
+                    this.alertMessage = "Обліковий запис із такою поштою вже існує.";
                       break;
                       default:
-                        this.alertMessage = "There was an error on the server, please try again later."
+                        this.alertMessage = "TНа сервері трапилася помилка, спробуйте пізніше.."
                         break;
                   }
                   this.alertService.error(this.alertMessage);

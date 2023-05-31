@@ -129,10 +129,10 @@ export class MitigationListPageComponent {
           error: error => {
             switch(error.status){
               case 404:
-                this.alertService.error("Загрозу не знайдено", false, false, "error-dialog");
+                this.alertService.error("Пом'якшення не знайдено.", false, false, "error-dialog");
                 break;
               default:
-                this.alertService.error("Несподівана помилка, спробуйте пізніше", false, false, "error-dialog");
+                this.alertService.error("Несподівана помилка, спробуйте пізніше.", false, false, "error-dialog");
                 break;
             }
             this.alertService.error(this.alertMessage);
@@ -142,13 +142,13 @@ export class MitigationListPageComponent {
   displayError(error: any) : void {
     switch (error.status) {
       case 400:
-        this.alertMessage = "Something went wrong";
+        this.alertMessage = "Щось пішло не так.";
         break;
       case 404:
         this.alertMessage = error.error.message;
         break;
       default:
-        this.alertMessage = "There was an error on the server, please try again later."
+        this.alertMessage = "Трапилася серверна помилка, спробуйте пізніше."
         break;
     }
     this.alertService.error(this.alertMessage,true,true);

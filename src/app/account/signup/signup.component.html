@@ -1,42 +1,42 @@
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <h2>Registration</h2>
+        <h2>Реєстрація</h2>
 
         <mat-form-field class="full-width-input">
-          <input matInput placeholder="First Name" formControlName="firstName" required>
+          <input matInput placeholder="Ім'я" formControlName="firstName" required>
           <mat-error>
             {{firstNameErrorMessage}}
           </mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width-input">
-            <input matInput placeholder="Last Name" formControlName="lastName" required>
+            <input matInput placeholder="Прізвище" formControlName="lastName" required>
             <mat-error>
-              Please provide a valid last name
+              Вкажіть коректне прізвище
             </mat-error>
           </mat-form-field>
 
           <mat-form-field class="full-width-input">
-            <input matInput [matDatepicker]="picker" time="false" date="true" placeholder="Birthdate" formControlName="birthDate" required>
+            <input matInput [matDatepicker]="picker" time="false" date="true" placeholder="Дата народження" formControlName="birthDate" required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error>
-                Please provide a valid birthdate
+              Вкажіть коректну дату народження
               </mat-error>
           </mat-form-field>
 
           <mat-form-field class="full-width-input">
-            <mat-label>Gender</mat-label>
+            <mat-label>Стать</mat-label>
             <mat-select formControlName="gender">
               <mat-option value="M">Male</mat-option>
               <mat-option value="F">Female</mat-option>
             </mat-select>
-            <mat-error>You must make a selection</mat-error>
+            <mat-error>Необхідно зробити вибір</mat-error>
           </mat-form-field>
 
           <mat-form-field class="full-width-input">
-            <input matInput placeholder="Email" formControlName="email" required>
+            <input matInput placeholder="Електронна пошта" formControlName="email" required>
             <mat-error>
-              Please provide a valid email
+              Вкажіть коректну електронну пошту
             </mat-error>
           </mat-form-field>
 
@@ -60,5 +60,5 @@
             </mat-error>
           </mat-form-field>
 
-        <button type="submit" mat-raised-button color="primary">Register</button>
+        <button type="submit" mat-raised-button color="primary">Зареєструватися</button>
       </form>

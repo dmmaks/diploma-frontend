@@ -25,7 +25,6 @@ export class CreateModerComponent implements OnDestroy {
     this.form = this.formBuilder.group({
       firstName: [null, [Validators.required, Validators.pattern('^([A-Z a-z]){3,35}$')]],
       lastName: [null, [Validators.required, Validators.pattern('^([A-Z a-z]){3,35}$')]],
-      imgUrl: [null, [Validators.required, Validators.pattern('[^\s]+(.*?)\.(jpg|jpeg|png|JPG|JPEG|PNG)$')]],
       birthDate: ['', Validators.required],
       email: ['', Validators.email],
       gender: ['', Validators.required]
@@ -43,7 +42,7 @@ export class CreateModerComponent implements OnDestroy {
         .pipe(takeUntil(this.destroy))
         .subscribe({
           next: () => {
-            this.alertService.success("Password-creation letter has been sent.", true, true);
+            this.alertService.success("Лист для створення паролю надіслано.", true, true);
             this.dialogRef.close();
           },
           error: error => {
@@ -55,7 +54,7 @@ export class CreateModerComponent implements OnDestroy {
                 this.alertService.error(error.error.message, false, false, "error-dialog");
                 break;
               default:
-                this.alertService.error("There was an error on the server, please try again later.", false, false, "error-dialog");
+                this.alertService.error("На сервері трапилася помилка, спробуйте пізніше.", false, false, "error-dialog");
                 break;
             }
           }

@@ -34,10 +34,10 @@ export class TechniqueInfoComponent implements OnInit {
           error: error => {
             switch(error.status){
               case 404:
-                this.alertService.error("Загрозу не знайдено", false, false, "error-dialog");
+                this.alertService.error("Загрозу не знайдено.", false, false, "error-dialog");
                 break;
               default:
-                this.alertService.error("Несподівана помилка, спробуйте пізніше", false, false, "error-dialog");
+                this.alertService.error("Несподівана помилка, спробуйте пізніше.", false, false, "error-dialog");
                 break;
             }
           }});
