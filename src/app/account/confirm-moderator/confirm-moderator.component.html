@@ -4,7 +4,7 @@
 <form [formGroup]="form" *ngIf="tokenStatus == TokenStatus.Valid" (ngSubmit)="onSubmit()">
   <h2>Створення паролю</h2>
   <mat-form-field class="full-width-input" >
-    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" onkeypress="return event.charCode != 32" formControlName="password" required>
+    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Пароль" onkeypress="return event.charCode != 32" formControlName="password" required>
     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>
@@ -14,7 +14,7 @@
   </mat-form-field>
 
   <mat-form-field class="full-width-input">
-    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Confirm password" onkeypress="return event.charCode != 32" formControlName="confirmPassword" required>
+    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Підтвердити пароль" onkeypress="return event.charCode != 32" formControlName="confirmPassword" required>
     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>

@@ -5,7 +5,7 @@
     <alert id="error-dialog"></alert>
     <div class="form">
       <mat-form-field>
-        <input matInput  placeholder="Email" formControlName="email" required >
+        <input matInput  placeholder="Електронна пошта" formControlName="email" required >
         <mat-error>
           Вкажіть коректну електронну пошту
         </mat-error>
@@ -14,7 +14,7 @@
 
     <div class="form">
       <mat-form-field>
-        <input matInput  placeholder="First Name" formControlName="firstName" required >
+        <input matInput  placeholder="Ім'я" formControlName="firstName" required >
         <mat-error>
           Вкажіть коректне ім'я
         </mat-error>
@@ -23,7 +23,7 @@
 
     <div class="form">
       <mat-form-field>
-        <input matInput placeholder="Last Name" formControlName="lastName" required >
+        <input matInput placeholder="Прізвище" formControlName="lastName" required >
         <mat-error>
           Вкажіть коректне прізвище
         </mat-error>
@@ -32,7 +32,7 @@
 
     <div class="form">
       <mat-form-field>
-        <input matInput [matDatepicker]="picker" placeholder="Birthdate" formControlName="birthDate" required>
+        <input matInput [matDatepicker]="picker" placeholder="Дата народження" formControlName="birthDate" required>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
         <mat-error>
@@ -54,7 +54,7 @@
 
     <div class="form">
       <mat-form-field>
-        <input matInput placeholder="Image url"  formControlName="imgUrl">
+        <input matInput placeholder="Зображення"  formControlName="imgUrl">
         <mat-error>
           Введене посилання має некоректний формат. Вкажіть зображення одного з форматів:.jpeg/.jpg/.png.
         </mat-error>
