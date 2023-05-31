@@ -62,13 +62,6 @@ table{
   ));
 }
 
-.withoutActions {
-  @include mat-table-columns((
-  technique: (width: 25%),
-  mitigation: (width: 29%)
-  ));
-}
-
 
 .mat-form-field, .mat-checkbox {
   font-size: 20px;
@@ -78,20 +71,8 @@ table{
 }
 
 
-.dish-name:hover, .dish-img:hover {
+.checklist-name:hover{
   cursor: pointer;
-}
-
-.likes {
-  color: #fe3e81;
-}
-
-.ingredient-filter {
-  width: 100%;
-}
-
-.chip-list {
-  width: 100%;
 }
 
 .main-filters {

@@ -3,9 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReplaySubject, takeUntil } from 'rxjs';
-import { Dish, Ingredient, NewKitchenware } from 'src/app/_models';
-import { AlertService, DishService, IngredientService } from 'src/app/_services';
-import { KitchenwareService } from 'src/app/_services/kitchenware.service';
+import { AlertService} from 'src/app/_services';
 import { DevicePredefinedValues } from 'src/app/_models/device-predefined-values';
 import { TechniqueMitigation } from 'src/app/_models/technique-mitigation';
 import { TechniqueMitigationService } from 'src/app/_services/technique-mitigation.service';

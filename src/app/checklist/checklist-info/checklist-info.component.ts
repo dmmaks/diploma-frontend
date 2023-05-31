@@ -1,14 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ReplaySubject, concatAll, delay, from, of, takeUntil, startWith} from 'rxjs';
 import {ActivatedRoute, Router} from "@angular/router";
-import { AlertService, DishService } from '../../_services';
+import { AlertService} from '../../_services';
 import { Checklist } from 'src/app/_models/checklist';
 import { ChecklistService } from 'src/app/_services/checklist.service';
 import { TechniqueMitigationService } from 'src/app/_services/technique-mitigation.service';
 import { ViewTechniqueMitigationComponent } from '../view-technique-mitigation/view-technique-mitigation.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Device } from 'src/app/_models/device';
-import { DeviceService } from 'src/app/_services/device.service';
 
 @Component({
   selector: 'app-checklist-info',

@@ -3,8 +3,6 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ReplaySubject, takeUntil} from "rxjs";
 import {AlertService} from "../../_services";
-import {Kitchenware} from "../../_models/kitchenware";
-import {KitchenwareService} from "../../_services/kitchenware.service";
 import { DevicePredefinedValues } from 'src/app/_models/device-predefined-values';
 import { DeviceService } from 'src/app/_services/device.service';
 import { Device } from 'src/app/_models/device';

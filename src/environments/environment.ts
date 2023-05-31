@@ -5,7 +5,7 @@
 export const environment = {
   production: true,
   serverUrl: 'http://localhost:8080/api',
-  tokenName: 'bakensweetsToken',
+  tokenName: 'diplomaToken',
   siteKey: '6Le3qCodAAAAAJWMyzjp3R7igz2rIEQoM7UWRbns',
   pageSize: 12
 };

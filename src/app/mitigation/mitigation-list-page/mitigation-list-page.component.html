@@ -19,7 +19,7 @@
 
         <ng-container matColumnDef="name" sortActionDescription="Сортувати за назвою">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Назва</mat-header-cell>
-          <mat-cell class="content-text" *matCellDef="let item" (click)="openMitigationDialog(item.id)">{{item.name}}</mat-cell>
+          <mat-cell class="content-text" *matCellDef="let item" (click)="openMitigationDialog(item.id)" class="mitigation-name">{{item.name}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="description">

@@ -4,11 +4,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { finalize, merge, ReplaySubject, takeUntil } from 'rxjs';
-import { NewKitchenware } from 'src/app/_models';
-import { SearchKitchenwareParams } from 'src/app/_models/search-kitchenware-params';
 import { StandardSearchParams } from 'src/app/_models/standard-search-params';
 import { TechniqueMitigation } from 'src/app/_models/technique-mitigation';
-import { KitchenwareService } from 'src/app/_services/kitchenware.service';
 import { TechniqueMitigationService } from 'src/app/_services/technique-mitigation.service';
 
 @Component({

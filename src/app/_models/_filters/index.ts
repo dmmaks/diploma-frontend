@@ -1,3 +1,1 @@
-export * from './ingredient.filter'
-export * from './stock.filter'
-export * from './dish-ingredient-filter'
+export * from './model-generation-device-filter'

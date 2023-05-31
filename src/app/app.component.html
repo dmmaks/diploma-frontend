@@ -5,9 +5,6 @@
   </span>
 
   <div *ngIf="account && account.role == Role.Moderator" fxFlex fxShow fxHide.lt-md>
-    <button mat-button routerLink="/ingredients">Ingredients</button>
-    <button mat-button routerLink="/kitchenware">Kitchenware</button>
-    <button mat-button routerLink="/dishes">Dishes</button>
     <button mat-button routerLink="/devices">Пристрої</button>
     <button mat-button routerLink="/techniques">Загрози</button>
     <button mat-button routerLink="/mitigations">Пом'якшення</button>
@@ -16,16 +13,12 @@
   </div>
 
   <div *ngIf="account && account.role == Role.Admin" fxFlex fxShow fxHide.lt-md>
-    <button mat-button routerLink="/admin">Management</button>
-    <button mat-button routerLink="/dishes">Dishes</button>
+    <button mat-button routerLink="/admin">Модератори</button>
     <button mat-button routerLink="/model-generation">Формування моделі</button>
     <button mat-button routerLink="/checklists">Чек-листи</button>
   </div>
 
   <div *ngIf="account && account.role == Role.User" fxFlex fxShow fxHide.lt-md>
-    <!-- <button mat-button routerLink="/friends">Friends</button> -->
-    <button mat-button routerLink="/stock">My Stock</button>
-    <button mat-button routerLink="/dishes">Dishes</button>
     <button mat-button routerLink="/model-generation">Формування моделі</button>
     <button mat-button routerLink="/checklists">Чек-листи</button>
   </div>
@@ -33,22 +26,22 @@
   <div *ngIf="!account" fxLayout="row" fxShow="false" fxShow.gt-sm>
     <button mat-button routerLink="/account/signin">
       <mat-icon>power_settings_new</mat-icon>
-      Login
+      Вхід
     </button>
     <button mat-button routerLink="/account/signup">
       <mat-icon>account_circle</mat-icon>
-      Register
+      Реєстрація
     </button>
   </div>
 
   <div *ngIf="account" fxLayout="row" fxShow="false" fxShow.gt-sm>
     <button mat-button routerLink="/profile">
       <mat-icon>assignment_ind</mat-icon>
-      My Profile
+      Мій профіль
     </button>
     <button mat-button (click)="logout()">
       <mat-icon>logout_outlined</mat-icon>
-      Logout
+      Вийти
     </button>
   </div>
 
@@ -62,44 +55,47 @@
   <div *ngIf="!account">
     <button mat-menu-item routerLink="/account/signup">
       <mat-icon>account_circle</mat-icon>
-      Register
+      Реєстрація
     </button>
     <button mat-menu-item routerLink="/account/signin">
       <mat-icon>power_settings_new</mat-icon>
-      Login
+      Вхід
     </button>
   </div>
 
   <div *ngIf="account">
     <button mat-menu-item routerLink="/profile">
       <mat-icon>assignment_ind</mat-icon>
-      My Profile
+      Мій профіль
     </button>
-    <button *ngIf="account.role == Role.Moderator" mat-menu-item routerLink="/ingredients">
+    <button *ngIf="account.role == Role.Moderator" mat-menu-item routerLink="/devices">
       <mat-icon>list</mat-icon>
-      Ingredients
+      Пристрої
     </button>
-    <button *ngIf="account.role == Role.Moderator" mat-menu-item routerLink="/kitchenware">
+    <button *ngIf="account.role == Role.Moderator" mat-menu-item routerLink="/techniques">
       <mat-icon>list</mat-icon>
-      Kitchenware
+      Загрози
     </button>
-    <button mat-menu-item routerLink="/dishes">
+    <button *ngIf="account.role == Role.Moderator" mat-menu-item routerLink="/mitigations">
       <mat-icon>list</mat-icon>
-      Dishes
+      Пом'якшення
     </button>
-    <button *ngIf="account.role == Role.User" mat-menu-item routerLink="/friends">
+    <button *ngIf="account.role == Role.Admin" mat-menu-item routerLink="/admin">
       <mat-icon>list</mat-icon>
-      Friends
+      Модератори
     </button>
-    <button *ngIf="account.role == Role.User" mat-menu-item routerLink="/stock">
+    <button mat-menu-item routerLink="/model-generation">
       <mat-icon>list</mat-icon>
-      My Stock
+      Формування моделі
+    </button>
+    <button mat-menu-item routerLink="/checklists">
+      <mat-icon>list</mat-icon>
+      Чек-листи
     </button>
     <button mat-menu-item (click)="logout()">
       <mat-icon>logout_outlined</mat-icon>
-      Logout
+      Вийти
     </button>
   </div>
-
 </mat-menu>
 <router-outlet></router-outlet>

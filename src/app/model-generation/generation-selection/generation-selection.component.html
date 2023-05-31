@@ -1,130 +1,45 @@
 <mat-card fxFlex="50%" fxFlex.xs="95%">
-  <mat-card-content> 
-    <form [formGroup]="searchForm" (ngSubmit)="generateModel()" class="dish-search-form">
-    <div class="filters">
-    <div class="main-filters">
-    <mat-form-field class="full-width-input">
-      <input
-        matInput
-        placeholder="Пристрій"
-        aria-label="Пристрій"
-        [matAutocomplete]="auto"
-        [formControl]="deviceControl"
-        required
-      />
-      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onDeviceSelected($event)" [displayWith]="displayDevice">
-        <mat-option
-          *ngFor="let device of filteredDevices | async"
-          [value]="device">
-          <span>{{ device.name }}</span>
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-    <button type="submit" class="btn-filter" mat-flat-button color="accent">Сформувати модель</button>
-    <!-- <mat-form-field class="full-width-input">
-      <input matInput placeholder="Search by name" formControlName="name" [disabled]="isFilteredByStock">
-    </mat-form-field>
+  <mat-card-content>
+    <form [formGroup]="searchForm" (ngSubmit)="generateModel()">
+      <div class="filters">
+        <div class="main-filters">
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="Пристрій" aria-label="Пристрій" [matAutocomplete]="auto"
+              [formControl]="deviceControl" required />
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onDeviceSelected($event)"
+              [displayWith]="displayDevice">
+              <mat-option *ngFor="let device of filteredDevices | async" [value]="device">
+                <span>{{ device.name }}</span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <button type="submit" class="btn-filter" mat-flat-button color="accent">Сформувати модель</button>
 
-    <mat-form-field class="full-width-input">
-      <mat-select placeholder="Select categories" formControlName="categories" multiple>
-        <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
-      </mat-select>
-    </mat-form-field> -->
-    <!-- <mat-checkbox color="primary" (change)="manageFilterByStock($event)" [disabled] = "isFilteredByFavorite" *ngIf = "userRole === 'ROLE_USER'">Filter by my stock</mat-checkbox>
-      <mat-checkbox color="primary" (change)="manageFilterByFavorite($event)" [disabled] = "isFilteredByStock" *ngIf = "userRole === 'ROLE_USER'">Show my favorites</mat-checkbox> -->
-    
+        </div>
+      </div>
+
+    </form>
+
+
+    <div class="table-container" *ngIf="generatedModel">
+      <mat-table id="table" [dataSource]="generatedModel.content" #table class="mat-cell">
+
+        <ng-container matColumnDef="technique">
+          <mat-header-cell *matHeaderCellDef>Загрози</mat-header-cell>
+          <mat-cell *matCellDef="let item"
+            (click)="openTechniqueDialog(item.techniqueId)">{{item.techniqueName}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="mitigation">
+          <mat-header-cell *matHeaderCellDef>Пом'якшення</mat-header-cell>
+          <mat-cell class="content-text" *matCellDef="let item"
+            (click)="openMitigationDialog(item.mitigationId)">{{item.mitigationName}}</mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+        <mat-row *matRowDef="let item; columns: columnsToDisplay"></mat-row>
+      </mat-table>
     </div>
-    <!-- <div class="ingredient-filter">
-    <mat-form-field class="full-width-input chip-list">
-      <mat-label>Select ingredients</mat-label>
-      <mat-chip-list #chipList aria-label="Ingredient selection" [disabled] = "isFilteredByFavorite || isFilteredByStock">
-        <mat-chip
-          *ngFor="let ingredient of selectedIngredients"
-          (removed)="removeIngredientFromList(ingredient)">
-          {{ingredient.name}}
-          <button matChipRemove>
-            <mat-icon>cancel</mat-icon>
-          </button>
-        </mat-chip>
-        <input
-          placeholder="Add ingredient..."
-          #ingredientInput
-          [formControl]="ingredientControl"
-          [matAutocomplete]="auto"
-          [matChipInputFor]="chipList"
-          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [disabled] = "isFilteredByFavorite || isFilteredByStock">
-      </mat-chip-list>
-      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onIngredientSelected($event)">
-        <mat-option *ngFor="let ingredient of filteredIngredients | async" [value]="ingredient">
-          {{ingredient.name}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-  </div> -->
-</div>
-      
-  </form>
-
-  
-<div class="table-container" *ngIf="generatedModel">
-  <mat-table id="table" [dataSource]="generatedModel.content" #table class="mat-cell">  
-
-    <ng-container matColumnDef="technique">
-      <mat-header-cell *matHeaderCellDef>Загрози</mat-header-cell>
-      <mat-cell *matCellDef="let item" (click)="openTechniqueDialog(item.techniqueId)">{{item.techniqueName}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="mitigation">
-      <mat-header-cell *matHeaderCellDef>Пом'якшення</mat-header-cell>
-      <mat-cell class="content-text" *matCellDef="let item" (click)="openMitigationDialog(item.mitigationId)">{{item.mitigationName}}</mat-cell>
-    </ng-container>
-
-    <!-- <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">Name</mat-header-cell>
-      <mat-cell class="content-text dish-img" *matCellDef="let item" routerLink="{{item.id}}">{{item.dishName}}</mat-cell>
-    </ng-container> -->
-
-    <!-- <ng-container matColumnDef="description">
-      <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
-      <mat-cell class="content-text" *matCellDef="let item">{{ (item.description.length>40)? (item.description | slice:0:40)+'...':(item.description) }}</mat-cell>
-    </ng-container> -->
-
-    <!-- <ng-container matColumnDef="actions"  *ngIf = "userRole !== 'ROLE_ADMIN'">
-      <mat-header-cell *matHeaderCellDef>
-          <button mat-icon-button color="primary" *ngIf = "userRole === 'ROLE_MODERATOR'" routerLink="./add">
-          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
-        </button>
-      </mat-header-cell>
-      <mat-cell *matCellDef="let item" >
-          <button mat-icon-button color="accent" *ngIf = "userRole === 'ROLE_MODERATOR'" [routerLink]="['edit', item.id]">
-          <mat-icon aria-label="Edit">edit</mat-icon>
-        </button>
-          <button mat-icon-button color="accent" *ngIf = "userRole === 'ROLE_MODERATOR'">
-            <mat-icon aria-label="Delete" (click)="confirmDelete(item.id)">delete</mat-icon>
-        </button>
-        <button mat-icon-button color="accent" (click)="manageDishLike(item)" *ngIf = "userRole === 'ROLE_USER'">
-          <mat-icon *ngIf="item.isLiked" aria-label="check_box">favorite</mat-icon>
-          <mat-icon *ngIf="!item.isLiked" aria-label="check_box">favorite_border</mat-icon>
-        </button>
-        <span class = "likes" *ngIf = "userRole === 'ROLE_USER'">{{item.totalLikes}}</span>
-        <button mat-icon-button color="accent" (click)="manageFavoriteDish(item)" *ngIf = "userRole === 'ROLE_USER'">
-          <mat-icon *ngIf="item.isFavorite" aria-label="check_box">star</mat-icon>
-          <mat-icon *ngIf="!item.isFavorite" aria-label="check_box">star_border</mat-icon>
-        </button>
-      </mat-cell>
-    </ng-container> -->
-
-    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
-    <mat-row *matRowDef="let item; columns: columnsToDisplay"></mat-row>
-  </mat-table>
-</div>
-</mat-card-content> 
+  </mat-card-content>
 </mat-card>
-
-<!-- <mat-paginator *ngIf="pageContent"
-  [length]="pageContent.totalElements"
-  [pageIndex]="currentPage"
-  [pageSize]="pageSize"
-  [pageSizeOptions]="[12, 20, 40]"
-  (page)="paginationHandler($event)">
-</mat-paginator> -->

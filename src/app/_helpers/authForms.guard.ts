@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { AuthService } from "../_services";
 import { CookieStorageService } from "./cookies.storage";
