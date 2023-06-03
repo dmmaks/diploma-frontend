@@ -30,7 +30,7 @@
       </mat-select>
     </mat-form-field>
 
-    <button type="submit" class="btn-filter" mat-flat-button color="warn">Фільтрувати</button>
+    <button type="submit" class="btn-filter" mat-flat-button color="accent">Фільтрувати</button>
   </form>
 </div>
 
@@ -38,23 +38,18 @@
 <div class="table-container">
   <mat-table id="table" [dataSource]="pageContent" #table matSort class="mat-cell">
 
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-      <mat-cell class="content-text" *matCellDef="let item" >{{item.id}}</mat-cell>
-    </ng-container>
-
     <ng-container matColumnDef="image">
       <mat-header-cell *matHeaderCellDef>Зображення</mat-header-cell>
       <mat-cell *matCellDef="let item"><img [src]="item.imgUrl"/></mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="firstName">
-      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Ім'я</mat-header-cell>
       <mat-cell class="content-text" *matCellDef="let item">{{item.firstName}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="lastName">
-      <mat-header-cell *matHeaderCellDef>Surname</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Прізвище</mat-header-cell>
       <mat-cell class="content-text" *matCellDef="let item">{{item.lastName}}</mat-cell>
     </ng-container>
 

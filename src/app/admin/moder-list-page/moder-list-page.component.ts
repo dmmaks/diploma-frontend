@@ -22,7 +22,7 @@ export class ModerListPageComponent {
   totalElements: number;
   searchForm: FormGroup = this.createFormGroup();
   destroy: ReplaySubject<any> = new ReplaySubject<any>();
-  columnsToDisplay = ['image', 'firstName', 'lastName', 'id', 'actions'];
+  columnsToDisplay = ['image', 'firstName', 'lastName',  'actions'];
   pageSize: number = 12;
   currentPage: number;
   alertMessage: string;
@@ -42,11 +42,12 @@ export class ModerListPageComponent {
       .subscribe({
         next: response => {
           this.pageContent = response.content;
+          console.log(response.content)
           this.totalElements = response.totalElements;
           this.currentPage = 0;
           },
         error: () => {
-          this.alertService.error("There was an error on the server, please try again later.", false, true);
+          this.alertService.error("Сталася помилка.", false, true);
           this.pageContent = [];
         }
       });

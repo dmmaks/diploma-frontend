@@ -11,7 +11,7 @@ export class PasswordValidatorShared {
     return this.control['password'].hasError('required') ?
       'Введіть, будь ласка, пароль' :
       this.control['password'].hasError('pattern') ?
-        'TПароль має містити щонайменше 8 символів, одну велику літеру, одну малу літеру та цифру' : '';
+        'Пароль має містити щонайменше 8 символів, одну велику літеру, одну малу літеру та цифру' : '';
   }
 
   get confirmPasswordErrorMessage(): string {

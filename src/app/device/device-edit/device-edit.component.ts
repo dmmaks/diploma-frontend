@@ -48,11 +48,11 @@ export class DeviceEditComponent implements OnInit, OnDestroy {
     });
     this.form = this.formBuilder.group({
       id: [this.device.id],
-      name: [this.device.name, [Validators.required, Validators.pattern('^([A-Z a-z 0-9]){1,40}$')]],
+      name: [this.device.name, [Validators.required, Validators.pattern('^(?=.{3,40}$).*')]],
       os: [this.device.os, [Validators.required]],
       osMinVersion: [this.device.osMinVersion, [Validators.required, Validators.pattern('^([A-Z a-z 0-9]){1,40}$')]],
       osMaxVersion: [this.device.osMaxVersion, [Validators.required, Validators.pattern('^([A-Z a-z 0-9]){1,40}$')]],
-      chipset: [this.device.chipset, [Validators.required, Validators.pattern('^([A-Z a-z 0-9]){1,40}$')]],
+      chipset: [this.device.chipset, [Validators.required, Validators.pattern('^^(?=.{3,40}$).*')]],
       fingerprintScanner: [this.device.fingerprintScanner],
       faceRecognition: [this.device.faceRecognition]
     });

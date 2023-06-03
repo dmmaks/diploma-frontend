@@ -1,11 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {PasswordValidatorShared} from "../../account/sharedClass/passwordValidatorShared";
-import {ReplaySubject, takeUntil} from "rxjs";
-import {FormBuilder, FormControl, Validators} from "@angular/forms";
-import {MustMatch} from "../../_helpers";
-import {AlertService} from "../../_services";
-import {ProfileService} from "../../_services/profile.service";
-import {Router} from "@angular/router";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { PasswordValidatorShared } from "../../account/sharedClass/passwordValidatorShared";
+import { ReplaySubject, takeUntil } from "rxjs";
+import { FormBuilder, FormControl, Validators } from "@angular/forms";
+import { MustMatch } from "../../_helpers";
+import { AlertService } from "../../_services";
+import { ProfileService } from "../../_services/profile.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-change-password',
@@ -31,10 +31,10 @@ export class ChangePasswordComponent extends PasswordValidatorShared implements 
 
   ngOnInit(): void {
     this.form = this.fb.group({
-        password: new FormControl('', [Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,32}$')]),
-        newPassword: new FormControl('', [Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,32}$')]),
-        confirmPassword: new FormControl('')
-      },
+      password: new FormControl('', [Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,32}$')]),
+      newPassword: new FormControl('', [Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,32}$')]),
+      confirmPassword: new FormControl('')
+    },
       {
         validator: MustMatch('newPassword', 'confirmPassword')
       });
@@ -42,9 +42,9 @@ export class ChangePasswordComponent extends PasswordValidatorShared implements 
 
   get newPasswordErrorMessage(): string {
     return this.form.controls['newPassword'].hasError('required') ?
-      'Enter your password, please' :
+      'Будь ласка, вкажіть пароль' :
       this.control['password'].hasError('pattern') ?
-        'The password contains at least 8 symbol, one uppercase letter, a lowercase letter, and a number' : '';
+        'Пароль мусить містити прнаймні 8 символів, одну велику літеру, одну малу та одну цифру' : '';
   }
 
   changePassword(): void {
@@ -53,21 +53,21 @@ export class ChangePasswordComponent extends PasswordValidatorShared implements 
       .pipe(takeUntil(this.destroy))
       .subscribe({
         next: () => {
-          this.alertService.success('Password changed',true,true);
+          this.alertService.success('Пароль змінено.', true, true);
         },
         error: error => {
           switch (error.status) {
             case 400:
-              this.alertMessage = "Something went wrong";
+              this.alertMessage = "Щось пішло не так.";
               break;
             case 409:
-              this.alertMessage = error.error.message;
+              this.alertMessage = "Некоректний старий пароль.";
               break;
             default:
-              this.alertMessage = "There was an error on the server, please try again later."
+              this.alertMessage = "Трапилася серверна помилка, спробуйте пізніше.."
               break;
           }
-          this.alertService.error(this.alertMessage,true,true);
+          this.alertService.error(this.alertMessage, true, true);
         }
       });
   }

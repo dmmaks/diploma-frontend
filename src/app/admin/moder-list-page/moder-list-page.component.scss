@@ -44,11 +44,10 @@ table{
 }
 
 @include mat-table-columns((
-  image: (width: 13%),
-  firstName: (width: 25%),
-  lastName: (width: 25%),
-  id: (width: 25%),
-  actions: (width:12%),
+  image: (width: 18%),
+  firstName: (width: 30%),
+  lastName: (width: 30%),
+  actions: (width:17%),
 ));
 
 
@@ -65,3 +64,24 @@ img{
   max-width: 100px;
   max-height: 150px;
 }
+
+
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+button.btn-filter{
+  margin-left: 15px;
+  color: #FFFFFF;
+}
+
+mat-cell, mat-header-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+

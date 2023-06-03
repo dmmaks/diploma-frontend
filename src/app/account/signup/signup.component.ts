@@ -70,7 +70,7 @@ onSubmit(): void {
                     this.alertMessage = "Обліковий запис із такою поштою вже існує.";
                       break;
                       default:
-                        this.alertMessage = "TНа сервері трапилася помилка, спробуйте пізніше.."
+                        this.alertMessage = "На сервері трапилася помилка, спробуйте пізніше.."
                         break;
                   }
                   this.alertService.error(this.alertMessage);

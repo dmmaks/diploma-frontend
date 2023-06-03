@@ -38,11 +38,11 @@ export class DeviceCreationComponent implements OnDestroy {
       }
     });
     this.form = this.formBuilder.group({
-      name: [null, [Validators.required, Validators.pattern('^([A-Z a-z 0-9]){1,40}$')]],
+      name: [null, [Validators.required, Validators.pattern('^(?=.{3,40}$).*')]],
       os: ['', [Validators.required]],
       osMinVersion: [null, [Validators.required, Validators.pattern('^([A-Z a-z 0-9]){1,40}$')]],
       osMaxVersion: [null, [Validators.required, Validators.pattern('^([A-Z a-z 0-9]){1,40}$')]],
-      chipset: [null, [Validators.required, Validators.pattern('^([A-Z a-z 0-9]){1,40}$')]],
+      chipset: [null, [Validators.required, Validators.pattern('^(?=.{3,40}$).*')]],
       fingerprintScanner: [''],
       faceRecognition: ['']
     });
