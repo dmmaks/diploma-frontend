@@ -25,7 +25,7 @@ export class CreateModerComponent implements OnDestroy {
     this.form = this.formBuilder.group({
       firstName: [null, [Validators.required, Validators.pattern('^(?=.{2,35}$).*')]],
       lastName: [null, [Validators.required, Validators.pattern('^(?=.{2,35}$).*')]],
-      imgUrl: [null, [Validators.required, Validators.pattern('[^\s]+(.*?)\.(jpg|jpeg|png|JPG|JPEG|PNG)$')]],
+      imgUrl: [null, [Validators.pattern('[^\s]+(.*?)\.(jpg|jpeg|png|JPG|JPEG|PNG)$')]],
       birthDate: ['', Validators.required],
       email: ['', Validators.email],
       gender: ['', Validators.required]

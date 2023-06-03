@@ -56,7 +56,13 @@ export class TechniqueAddEditComponent implements OnInit {
       this.techniqueMitigationService.getApplicabilityByTechniqueId(id).pipe(takeUntil(this.destroy)).subscribe({
         next: (data: Applicability) => {
           this.applicability = data;
-          this.form.addControl('os', new FormControl(this.applicability.os, [Validators.required, Validators.maxLength(40)]));
+          this.applicability.os = this.applicability.os ? this.applicability.os : '';
+          this.applicability.osMinVersion = this.applicability.osMinVersion ? this.applicability.osMinVersion : '';
+          this.applicability.osMaxVersion = this.applicability.osMaxVersion ? this.applicability.osMaxVersion : '';
+          this.applicability.chipset = this.applicability.chipset ? this.applicability.chipset : '';
+          this.applicability.fingerprintScanner = this.applicability.fingerprintScanner ? this.applicability.fingerprintScanner : '';
+          this.applicability.faceRecognition = this.applicability.faceRecognition ? this.applicability.faceRecognition : '';
+          this.form.addControl('os', new FormControl(this.applicability.os, [Validators.maxLength(40)]));
           this.form.addControl('osMinVersion', new FormControl(this.applicability.osMinVersion, [Validators.maxLength(10)]));
           this.form.addControl('osMaxVersion', new FormControl(this.applicability.osMaxVersion, [Validators.maxLength(10)]));
           this.form.addControl('chipset', new FormControl(this.applicability.chipset, [Validators.maxLength(40)]));

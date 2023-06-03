@@ -28,7 +28,7 @@
 
           <ng-container matColumnDef="description">
             <mat-header-cell *matHeaderCellDef>Назва</mat-header-cell>
-            <mat-cell *matCellDef="let row">{{row.description}}</mat-cell>
+            <mat-cell *matCellDef="let row">{{ (row.description.length>30)? (row.description | slice:0:30)+'...':(row.description) }}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="actions">
@@ -63,21 +63,21 @@
       <mat-form-field>
         <input matInput placeholder="Початкова версія ОС" formControlName="osMinVersion" [(ngModel)]="applicability.osMinVersion">
         <mat-error>
-          Будь ласка, введіть початкову версію ОС
+          Будь ласка, введіть початкову версію ОС меншої довжини
         </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <input matInput placeholder="Кінцева версія ОС" formControlName="osMaxVersion" [(ngModel)]="applicability.osMaxVersion">
         <mat-error>
-          Будь ласка, введіть кінцеву версію ОС
+          Будь ласка, введіть кінцеву версію ОС меншої довжини
         </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <input matInput placeholder="Процесор" formControlName="chipset" [(ngModel)]="applicability.chipset">
         <mat-error>
-          Будь ласка, введіть процесор
+          Будь ласка, введіть назву процесора меншої довжини
         </mat-error>
       </mat-form-field>
 
