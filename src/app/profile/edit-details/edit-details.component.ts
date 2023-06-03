@@ -29,8 +29,8 @@ export class EditDetailsComponent implements OnInit, OnDestroy {
   destroy: ReplaySubject<any> = new ReplaySubject<any>();
   alertMessage: string;
   form = new FormGroup({
-    firstName: new FormControl('', [Validators.pattern('^([A-Z a-z]){2,35}$')]),
-    lastName: new FormControl('', [Validators.pattern('^([A-Z a-z]){2,35}$')]),
+    firstName: new FormControl('', [Validators.pattern('^(?=.{2,35}$).*')]),
+    lastName: new FormControl('', [Validators.pattern('^(?=.{2,35}$).*')]),
     date: new FormControl(''),
     gender: new FormControl(''),
     imgUrl: new FormControl('')

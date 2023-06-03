@@ -26,8 +26,8 @@ constructor(
 ){
   super();
   this.form = this.formBuilder.group({
-    firstName: [null, [Validators.required, Validators.pattern('^([A-Z a-z]){2,35}$')]],
-    lastName: [null, [Validators.required, Validators.pattern('^([A-Z a-z]){3,35}$')]],
+    firstName: [null, [Validators.required, Validators.pattern('^(?=.{2,35}$).*')]],
+    lastName: [null, [Validators.required, Validators.pattern('^(?=.{2,35}$).*')]],
     birthDate: ['', Validators.required],
     email: ['', Validators.email],
     password: [null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,32}$')]],
